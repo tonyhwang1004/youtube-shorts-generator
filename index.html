@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortsAI - AI로 만드는 유튜브 쇼츠</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 헤더 섹션 -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-video"></i>
+                    <span>ShortsAI</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="#features">기능</a>
+                    <a href="#pricing">가격</a>
+                    <a href="#contact">문의</a>
+                    <button class="login-btn">로그인</button>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">AI가 만드는</span><br>
+                    <span class="typing-effect">유튜브 쇼츠</span>
+                </h1>
+                <p class="hero-subtitle">
+                    대본만 입력하면 자동으로 영상, 자막, 음성이 완성됩니다.<br>
+                    광고주와 크리에이터를 위한 최고의 솔루션
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">제작된 영상</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5분</span>
+                        <span class="stat-label">평균 제작시간</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">고객 만족도</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 생성기 섹션 -->
+    <main class="main-generator">
+        <div class="container">
+            <div class="generator-header">
+                <h2>🎬 영상 생성기</h2>
+                <p>아래에 대본을 입력하고 설정을 조정한 후 생성 버튼을 클릭하세요</p>
+            </div>
+            
+            <div class="generator-layout">
+                <!-- 입력 패널 -->
+                <div class="input-panel">
+                    <div class="panel-card">
+                        <div class="card-header">
+                            <i class="fas fa-edit"></i>
+                            <h3>대본 입력</h3>
+                        </div>
+                        <textarea 
+                            id="scriptInput" 
+                            class="script-textarea" 
+                            placeholder="여기에 유튜브 쇼츠 대본을 입력하세요...
+
+예시:
+안녕하세요! 오늘은 맛있는 김치찌개 만드는 법을 알려드릴게요.
+먼저 김치를 팬에 볶아주세요.
+그다음 물을 넣고 끓여주세요.
+마지막으로 두부와 고기를 넣으면 완성!">안녕하세요! 오늘은 성공하는 유튜브 채널 만드는 5가지 비법을 알려드릴게요.
+
+첫 번째, 일관성 있는 콘텐츠를 만드세요. 시청자들이 당신 채널에서 무엇을 기대할 수 있는지 알게 해주세요.
+
+두 번째, 썸네일과 제목이 정말 중요해요. 클릭률을 높이는 것이 성공의 열쇠입니다.
+
+세 번째, 댓글과 소통하세요. 시청자와의 관계가 채널 성장의 원동력이에요.
+
+네 번째, 꾸준한 업로드 스케줄을 유지하세요. 시청자들이 언제 새 영상이 올라올지 알 수 있게 해주세요.
+
+마지막으로, 트렌드를 놓치지 마세요. 하지만 자신만의 색깔을 잃지는 말아주세요.
+
+이 5가지만 지키면 여러분도 성공할 수 있어요!</textarea>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="card-header">
+                            <i class="fas fa-cog"></i>
+                            <h3>영상 설정</h3>
+                        </div>
+                        <div class="settings-grid">
+                            <div class="setting-item">
+                                <label>영상 스타일</label>
+                                <select id="videoStyle" class="control-select">
+                                    <option value="modern">모던</option>
+                                    <option value="cinematic">시네마틱</option>
+                                    <option value="minimal">미니멀</option>
+                                    <option value="vibrant">생동감</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label>음성 속도</label>
+                                <input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1" class="control-slider">
+                                <span id="speedValue">1.0x</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>배경 음악</label>
+                                <select id="backgroundMusic" class="control-select">
+                                    <option value="none">없음</option>
+                                    <option value="upbeat">업비트</option>
+                                    <option value="calm">차분한</option>
+                                    <option value="dramatic">드라마틱</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label>자막 스타일</label>
+                                <select id="subtitleStyle" class="control-select">
+                                    <option value="bold">굵은 글씨</option>
+                                    <option value="elegant">우아한</option>
+                                    <option value="playful">재미있는</option>
+                                    <option value="professional">전문적</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="generateBtn" class="generate-button">
+                        <i class="fas fa-magic"></i>
+                        <span>AI 영상 생성하기</span>
+                        <div class="button-glow"></div>
+                    </button>
+                </div>
+
+                <!-- 미리보기 패널 -->
+                <div class="preview-panel">
+                    <div class="panel-card">
+                        <div class="card-header">
+                            <i class="fas fa-play"></i>
+                            <h3>미리보기</h3>
+                        </div>
+                        <div class="video-preview">
+                            <div id="videoContainer" class="video-container">
+                                <div class="phone-mockup">
+                                    <div class="phone-screen">
+                                        <canvas id="videoCanvas" width="360" height="640"></canvas>
+                                        <div id="subtitleOverlay" class="subtitle-overlay"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="video-controls">
+                                <button id="playBtn" class="control-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div id="progressBar" class="progress-bar"></div>
+                                </div>
+                                <span id="timeDisplay" class="time-display">0:00 / 0:00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="card-header">
+                            <i class="fas fa-download"></i>
+                            <h3>다운로드</h3>
+                        </div>
+                        <div class="download-options">
+                            <button id="downloadVideo" class="download-btn" disabled>
+                                <i class="fas fa-video"></i>
+                                <span>MP4 다운로드</span>
+                            </button>
+                            <button id="downloadAudio" class="download-btn" disabled>
+                                <i class="fas fa-volume-up"></i>
+                                <span>음성 다운로드</span>
+                            </button>
+                            <button id="downloadSubtitle" class="download-btn" disabled>
+                                <i class="fas fa-closed-captioning"></i>
+                                <span>자막 다운로드</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 기능 섹션 -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">✨ 강력한 기능들</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI 자동 생성</h3>
+                    <p>텍스트만 입력하면 AI가 자동으로 이미지, 음성, 자막을 생성합니다</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>다양한 스타일</h3>
+                    <p>모던, 시네마틱, 미니멀 등 다양한 영상 스타일을 선택할 수 있습니다</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>빠른 제작</h3>
+                    <p>평균 5분 이내에 고품질 유튜브 쇼츠를 완성할 수 있습니다</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>모바일 최적화</h3>
+                    <p>9:16 비율로 모바일에 완벽하게 최적화된 영상을 제작합니다</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 진행 상태 모달 -->
+    <div id="progressModal" class="modal">
+        <div class="modal-content">
+            <h3>🎬 AI가 영상을 제작중입니다...</h3>
+            <div class="progress-steps">
+                <div class="step active" id="step1">
+                    <i class="fas fa-file-text"></i>
+                    <span>대본 분석</span>
+                </div>
+                <div class="step" id="step2">
+                    <i class="fas fa-images"></i>
+                    <span>이미지 생성</span>
+                </div>
+                <div class="step" id="step3">
+                    <i class="fas fa-volume-up"></i>
+                    <span>음성 합성</span>
+                </div>
+                <div class="step" id="step4">
+                    <i class="fas fa-video"></i>
+                    <span>영상 합성</span>
+                </div>
+            </div>
+            <div class="loading-bar">
+                <div id="loadingProgress" class="loading-fill"></div>
+            </div>
+            <p id="progressText">대본을 분석하고 있습니다...</p>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/video-generator.js"></script>
+    <script src="js/text-to-speech.js"></script>
+</body>
+</html>
