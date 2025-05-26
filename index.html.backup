@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 ShortsAI - AI 영상 자동 생성기</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Noto Sans KR', Arial, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            min-height: 100vh; 
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 2rem; font-weight: bold; }
+        .hero { text-align: center; padding: 60px 0; }
+        .hero-title { font-size: 3rem; font-weight: 700; margin-bottom: 20px; }
+        .highlight { 
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+        }
+        .hero-subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px; line-height: 1.6; }
+        .stats { display: flex; justify-content: center; gap: 40px; margin: 40px 0; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: bold; color: #ffd700; }
+        .stat-label { font-size: 1rem; opacity: 0.8; }
+        .generate-section { 
+            background: rgba(255, 255, 255, 0.1); 
+            border-radius: 20px; 
+            padding: 40px; 
+            margin: 40px 0; 
+            backdrop-filter: blur(10px);
+        }
+        .section-header { text-align: center; margin-bottom: 30px; }
+        .section-header h2 { font-size: 2rem; margin-bottom: 10px; }
+        .script-input-section { margin-bottom: 30px; }
+        .script-input-section label { display: block; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+        #script {
+            width: 100%; min-height: 120px; padding: 20px; border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 16px; font-family: inherit; resize: vertical;
+        }
+        #script::placeholder { color: rgba(255, 255, 255, 0.6); }
+        .advanced-controls { 
+            background: rgba(255, 255, 255, 0.1); border-radius: 15px; 
+            padding: 30px; margin: 30px 0; border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .advanced-controls h3 { font-size: 1.3rem; margin-bottom: 20px; text-align: center; }
+        .voice-style-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin: 20px 0; }
+        .voice-style-btn {
+            background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px; padding: 12px 8px; color: white; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease; text-align: center; font-size: 14px;
+        }
+        .voice-style-btn:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+        .voice-style-btn.active { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-color: #fff; }
+        .slider-control { margin: 20px 0; }
+        .slider-control label { display: block; font-weight: bold; margin-bottom: 10px; }
+        .custom-slider { width: 100%; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.2); outline: none; -webkit-appearance: none; }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); cursor: pointer;
+        }
+        .effects-toggle { display: flex; justify-content: space-around; margin: 20px 0; }
+        .effect-control { text-align: center; }
+        .effect-control label { display: block; margin-bottom: 10px; font-weight: bold; }
+        .effect-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .effect-switch input { opacity: 0; width: 0; height: 0; }
+        .switch-slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2); transition: 0.4s; border-radius: 28px;
+        }
+        .switch-slider:before {
+            position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
+            background-color: white; transition: 0.4s; border-radius: 50%;
+        }
+        input:checked + .switch-slider { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
+        input:checked + .switch-slider:before { transform: translateX(22px); }
+        .generate-button-section { text-align: center; margin: 40px 0; }
+        .generate-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border: none; color: white;
+            padding: 18px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 50px;
+            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .generate-button:hover { transform: translateY(-3px); }
+        .button-icon { font-size: 1.4rem; }
+        .generate-note { margin-top: 10px; opacity: 0.8; }
+        .footer { background: rgba(0, 0, 0, 0.2); border-radius: 15px; padding: 30px; margin-top: 40px; text-align: center; }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .stats { flex-direction: column; gap: 20px; }
+            .voice-style-selector { grid-template-columns: repeat(2, 1fr); }
+            .effects-toggle { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">🎬 ShortsAI</div>
+        </header>
+
+        <section class="hero">
+            <h1 class="hero-title">
+                AI가 만드는<br>
+                <span class="highlight">SNS 콘텐츠</span>
+            </h1>
+            <p class="hero-subtitle">
+                대본만 입력하면 자동으로 영상, 자막, 음성이 완성됩니다.<br>
+                창고수와 크리에이터를 위한 최고의 솔루션
+            </p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">제작된 영상</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5분</div>
+                    <div class="stat-label">평균 제작시간</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">고객 만족도</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="generate" class="generate-section">
+            <div class="section-header">
+                <h2>🎬 AI 영상 생성기</h2>
+                <p>텍스트 대본을 입력하고 원하는 스타일을 선택하세요</p>
+            </div>
+
+            <div class="script-input-section">
+                <label for="script">📝 영상 대본</label>
+                <textarea id="script" placeholder="여기에 영상 대본을 입력하세요...
+
+예: 오늘은 맛있는 요리 레시피를 소개해드릴게요. 
+간단하지만 정말 맛있는 김치볶음밥 만드는 법을 알려드릴게요!" rows="4"></textarea>
+            </div>
+
+            <div class="advanced-controls">
+                <h3>🎵 음성 스타일 선택</h3>
+                <div class="voice-style-selector">
+                    <button class="voice-style-btn active" data-style="natural">자연스럽게</button>
+                    <button class="voice-style-btn" data-style="dramatic">드라마틱</button>
+                    <button class="voice-style-btn" data-style="energetic">에너지틱</button>
+                    <button class="voice-style-btn" data-style="mysterious">신비로운</button>
+                    <button class="voice-style-btn" data-style="professional">전문적</button>
+                </div>
+
+                <div class="slider-control">
+                    <label for="speed-slider">🏃‍♂️ 말하기 속도: <span id="speed-value">1.0x</span></label>
+                    <input type="range" id="speed-slider" class="custom-slider" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="slider-control">
+                    <label for="pitch-slider">🎵 음성 톤: <span id="pitch-value">보통</span></label>
+                    <input type="range" id="pitch-slider" class="custom-slider" min="0.5" max="1.5" step="0.1" value="1.0">
+                </div>
+
+                <h3>✨ 시각 효과</h3>
+                <div class="effects-toggle">
+                    <div class="effect-control">
+                        <label>파티클 효과</label>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="particles-toggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <div class="effect-control">
+                        <label>그라데이션 배경</label>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="gradient-toggle" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="generate-button-section">
+                <button id="generate-video-btn" class="generate-button">
+                    <span class="button-icon">🤖</span>
+                    <span class="button-text">AI 영상 생성하기</span>
+                </button>
+                <p class="generate-note">평균 5분 이내에 완성됩니다</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <h4>🎬 ShortsAI</h4>
+                <p>AI가 만드는 SNS 콘텐츠 생성기</p>
+                <p>GitHub: tonyhwang1004 | Made with ❤️ by Tony Hwang</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 🎛️ 고급 컨트롤 JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 ShortsAI 로딩 완료!');
+            
+            // 음성 스타일 버튼 이벤트
+            document.querySelectorAll('.voice-style-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.voice-style-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    console.log('🎵 음성 스타일:', this.dataset.style);
+                });
+            });
+
+            // 속도 슬라이더
+            const speedSlider = document.getElementById('speed-slider');
+            const speedValue = document.getElementById('speed-value');
+            speedSlider.addEventListener('input', function() {
+                speedValue.textContent = this.value + 'x';
+                console.log('🏃‍♂️ 속도:', this.value);
+            });
+
+            // 피치 슬라이더
+            const pitchSlider = document.getElementById('pitch-slider');
+            const pitchValue = document.getElementById('pitch-value');
+            pitchSlider.addEventListener('input', function() {
+                const pitch = parseFloat(this.value);
+                const text = pitch < 0.8 ? '낮음' : pitch > 1.2 ? '높음' : '보통';
+                pitchValue.textContent = text;
+                console.log('🎵 피치:', pitch);
+            });
+
+            // 생성 버튼
+            document.getElementById('generate-video-btn').addEventListener('click', function() {
+                const script = document.getElementById('script').value;
+                if (!script.trim()) {
+                    alert('🚨 대본을 입력해주세요!');
+                    return;
+                }
+                
+                this.innerHTML = '<span class="button-icon">⏳</span><span class="button-text">AI 생성 중...</span>';
+                this.disabled = true;
+                
+                // 시뮬레이션
+                setTimeout(() => {
+                    this.innerHTML = '<span class="button-icon">🎉</span><span class="button-text">생성 완료!</span>';
+                    setTimeout(() => {
+                        this.innerHTML = '<span class="button-icon">🤖</span><span class="button-text">AI 영상 생성하기</span>';
+                        this.disabled = false;
+                    }, 2000);
+                }, 3000);
+                
+                console.log('🎬 영상 생성 시작:', script);
+            });
+        });
+    </script>
+</body>
+</html>
