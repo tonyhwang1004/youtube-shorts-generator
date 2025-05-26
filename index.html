@@ -118,7 +118,7 @@
             border-radius: 15px;
             padding: 20px;
             width: 300px;
-            height: 533px; /* 9:16 비율 */
+            height: 533px;
             position: relative;
             border: 2px solid rgba(255, 255, 255, 0.2);
             display: flex;
@@ -184,7 +184,6 @@
         .download-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         .download-btn .icon { font-size: 1.2rem; }
         
@@ -196,9 +195,7 @@
             margin: 20px 0;
             text-align: center;
             font-weight: bold;
-            animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
         
         .footer { background: rgba(0, 0, 0, 0.2); border-radius: 15px; padding: 30px; margin-top: 40px; text-align: center; }
         @media (max-width: 768px) {
@@ -382,11 +379,10 @@
     </div>
 
     <script>
-        // 🎛️ 고급 컨트롤 JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 ShortsAI 로딩 완료!');
             
-            // 음성 스타일 버튼 이벤트
+            // 음성 스타일 버튼
             document.querySelectorAll('.voice-style-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.voice-style-btn').forEach(b => b.classList.remove('active'));
@@ -395,25 +391,22 @@
                 });
             });
 
-            // 속도 슬라이더
+            // 슬라이더들
             const speedSlider = document.getElementById('speed-slider');
             const speedValue = document.getElementById('speed-value');
             speedSlider.addEventListener('input', function() {
                 speedValue.textContent = this.value + 'x';
-                console.log('🏃‍♂️ 속도:', this.value);
             });
 
-            // 피치 슬라이더
             const pitchSlider = document.getElementById('pitch-slider');
             const pitchValue = document.getElementById('pitch-value');
             pitchSlider.addEventListener('input', function() {
                 const pitch = parseFloat(this.value);
                 const text = pitch < 0.8 ? '낮음' : pitch > 1.2 ? '높음' : '보통';
                 pitchValue.textContent = text;
-                console.log('🎵 피치:', pitch);
             });
 
-            // 🎬 생성 버튼 - 결과 표시 포함
+            // 생성 버튼
             document.getElementById('generate-video-btn').addEventListener('click', function() {
                 const script = document.getElementById('script').value;
                 if (!script.trim()) {
@@ -421,48 +414,28 @@
                     return;
                 }
                 
-                // 버튼 상태 변경
                 this.innerHTML = '<span class="button-icon">⏳</span><span class="button-text">AI 영상 생성 중...</span>';
                 this.disabled = true;
                 
-                // 결과 섹션 숨기기
                 document.getElementById('result-section').classList.remove('show');
                 
-                // 시뮬레이션 (3초 후 완료)
                 setTimeout(() => {
-                    // 버튼 복원
                     this.innerHTML = '<span class="button-icon">🤖</span><span class="button-text">AI 영상 생성하기</span>';
                     this.disabled = false;
                     
-                    // 결과 섹션 표시
                     document.getElementById('result-section').classList.add('show');
+                    document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
                     
-                    // 결과 섹션으로 스크롤
-                    document.getElementById('result-section').scrollIntoView({ 
-                        behavior: 'smooth' 
-                    });
-                    
-                    // 영상 제목 업데이트
                     const videoTitle = document.querySelector('.video-title');
                     const firstLine = script.split('\n')[0].substring(0, 20);
                     videoTitle.textContent = firstLine + (firstLine.length >= 20 ? '...' : '');
-                    
                 }, 3000);
-                
-                console.log('🎬 영상 생성 시작:', script);
             });
 
-            // 새 영상 만들기 버튼
+            // 새 영상 만들기
             document.getElementById('generate-new-btn').addEventListener('click', function() {
-                // 결과 섹션 숨기기
                 document.getElementById('result-section').classList.remove('show');
-                
-                // 생성 섹션으로 스크롤
-                document.getElementById('generate').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
-                
-                // 대본 입력창 포커스
+                document.getElementById('generate').scrollIntoView({ behavior: 'smooth' });
                 document.getElementById('script').focus();
             });
 
@@ -471,13 +444,6 @@
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     const type = this.dataset.type;
-                    const fileName = `shorts-ai-video.${type === 'video' ? 'mp4' : type === 'audio' ? 'wav' : 'srt'}`;
-                    
-                    // 실제로는 서버에서 파일을 생성하고 다운로드
-                    // 여기서는 시뮬레이션
-                    console.log(`📥 다운로드 시작: ${fileName}`);
-                    
-                    // 다운로드 시뮬레이션 알림
                     const originalText = this.innerHTML;
                     this.innerHTML = '<span class="icon">⏳</span><span>다운로드 중...</span>';
                     
