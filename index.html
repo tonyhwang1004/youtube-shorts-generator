@@ -314,7 +314,7 @@
             transform: translateX(26px);
         }
         
-        /* 🚀 메가 생성 버튼 */
+        /* 🚀 메가 생성 버튼 섹션 */
         .mega-generate-section { 
             text-align: center; 
             margin: 60px 0;
@@ -338,6 +338,7 @@
             box-shadow: 0 15px 40px rgba(255, 107, 107, 0.3);
             position: relative;
             overflow: hidden;
+            margin-bottom: 30px;
         }
         .mega-generate-button::before {
             content: '';
@@ -362,6 +363,170 @@
             transform: none;
         }
         .button-icon { font-size: 1.6rem; }
+        
+        /* 🎥 동영상 보기 버튼 */
+        .video-preview-button {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border: none;
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .video-preview-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .video-preview-button:hover::before {
+            left: 100%;
+        }
+        .video-preview-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(78, 205, 196, 0.4);
+        }
+        
+        /* 🎬 동영상 미리보기 모달 */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .video-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .video-modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .modal-close:hover {
+            transform: scale(1.2) rotate(90deg);
+        }
+        
+        .video-demo-player {
+            width: 100%;
+            max-width: 350px;
+            height: 620px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-demo-player::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        .demo-play-icon {
+            font-size: 6rem;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .demo-play-icon:hover {
+            transform: scale(1.1);
+            text-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .demo-video-info {
+            text-align: center;
+            padding: 20px;
+        }
+        .demo-video-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .demo-video-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .demo-control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        .demo-control-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
         
         /* 🎬 메가 결과 섹션 */
         .mega-result-section {
@@ -657,6 +822,8 @@
             .dual-video-preview { grid-template-columns: 1fr; }
             .download-grid { grid-template-columns: 1fr; }
             .footer-content { grid-template-columns: 1fr; }
+            .video-modal-content { width: 95%; padding: 20px; }
+            .video-demo-player { max-width: 280px; height: 500px; }
         }
         
         /* 🎪 로딩 애니메이션 */
@@ -684,6 +851,63 @@
         @keyframes glow {
             from { text-shadow: 0 0 10px #4ecdc4, 0 0 20px #4ecdc4, 0 0 30px #4ecdc4; }
             to { text-shadow: 0 0 20px #ff6b6b, 0 0 30px #ff6b6b, 0 0 40px #ff6b6b; }
+        }
+
+        /* 🎯 토스트 알림 */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+            font-weight: bold;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* 🎨 진행 표시기 */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 20px;
+            margin: 30px 0;
+            display: none;
+        }
+        .progress-container.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s ease;
+            animation: progressGlow 2s infinite;
+        }
+        @keyframes progressGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(78, 205, 196, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+        }
+        .progress-text {
+            text-align: center;
+            font-weight: bold;
+            color: #4ecdc4;
         }
     </style>
 </head>
@@ -874,15 +1098,66 @@
                 </div>
             </div>
 
-            <!-- 🚀 메가 생성 버튼 -->
+            <!-- 🚀 메가 생성 버튼 섹션 -->
             <div class="mega-generate-section">
                 <button id="mega-generate-btn" class="mega-generate-button">
                     <span class="button-icon">🚀</span>
                     <span class="button-text">AI 마스터피스 생성하기</span>
                 </button>
+                
+                <!-- 🎥 동영상 보기 버튼 NEW! -->
+                <div style="margin-top: 20px;">
+                    <button id="video-preview-btn" class="video-preview-button">
+                        <span class="button-icon">🎥</span>
+                        <span class="button-text">동영상 미리보기</span>
+                    </button>
+                </div>
+                
+                <!-- 🎨 진행 표시기 -->
+                <div id="progress-container" class="progress-container">
+                    <div class="progress-text">AI가 열심히 작업 중입니다... 🤖</div>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <div id="progress-stage" class="progress-text">음성 생성 중...</div>
+                </div>
+                
                 <p class="generate-note">혁신적인 AI 기술로 30초 내에 완성됩니다</p>
             </div>
         </section>
+
+        <!-- 🎬 동영상 미리보기 모달 -->
+        <div id="video-modal" class="video-modal">
+            <div class="video-modal-content">
+                <button class="modal-close" id="modal-close">×</button>
+                
+                <h3 style="margin-bottom: 20px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    🎥 AI 영상 미리보기
+                </h3>
+                
+                <div class="video-demo-player" id="demo-player">
+                    <div class="demo-play-icon" id="demo-play-icon">▶️</div>
+                    <div class="demo-video-info">
+                        <div class="demo-video-title">샘플 AI 영상</div>
+                        <div class="demo-video-desc">
+                            ShortsAI로 제작된 실제 영상 예시입니다.<br>
+                            🎭 캐릭터: 사라 | 🎨 스타일: 모던<br>
+                            📐 해상도: 4K | ⏱️ 길이: 15초
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-controls">
+                    <button class="demo-control-btn" id="play-demo">▶️ 재생</button>
+                    <button class="demo-control-btn" id="stop-demo">⏹️ 정지</button>
+                    <button class="demo-control-btn" id="fullscreen-demo">🔍 전체화면</button>
+                </div>
+                
+                <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;">
+                    💡 실제 영상을 생성하려면 위의 "AI 마스터피스 생성하기" 버튼을 클릭하세요!
+                </p>
+            </div>
+        </div>
 
         <!-- 🎬 메가 결과 섹션 -->
         <section id="mega-result-section" class="mega-result-section">
@@ -1018,7 +1293,7 @@
                 </div>
                 <div class="footer-section">
                     <h4>🚀 새로운 기능</h4>
-                    <p>• 6가지 AI 음성 캐릭터<br>• 4K UHD 해상도 지원<br>• 6가지 프리미엄 효과<br>• 듀얼 영상 생성</p>
+                    <p>• 6가지 AI 음성 캐릭터<br>• 4K UHD 해상도 지원<br>• 6가지 프리미엄 효과<br>• 듀얼 영상 생성<br>• 🆕 동영상 미리보기</p>
                 </div>
                 <div class="footer-section">
                     <h4>📞 연락처</h4>
@@ -1037,10 +1312,24 @@
         </footer>
     </div>
 
+    <!-- 🎯 토스트 알림 -->
+    <div id="toast" class="toast"></div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 ShortsAI Pro v2.0 로딩 완료!');
             
+            // 🎯 토스트 알림 시스템
+            function showToast(message, duration = 3000) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, duration);
+            }
+
             // 🎭 음성 캐릭터 선택
             document.querySelectorAll('.voice-character-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -1049,6 +1338,7 @@
                     const character = this.dataset.character;
                     const style = this.dataset.style;
                     console.log(`🎵 선택된 캐릭터: ${character} (${style})`);
+                    showToast(`🎭 ${this.querySelector('.character-name').textContent} 캐릭터가 선택되었습니다!`);
                 });
             });
 
@@ -1087,93 +1377,204 @@
                 if (toggle) {
                     toggle.addEventListener('change', function() {
                         console.log(`✨ ${effect} 효과: ${this.checked ? 'ON' : 'OFF'}`);
+                        const effectName = this.closest('.effect-card').querySelector('.effect-name').textContent;
+                        showToast(`${this.checked ? '✅' : '❌'} ${effectName} ${this.checked ? '활성화' : '비활성화'}되었습니다!`);
                     });
                 }
+            });
+
+            // 🎥 동영상 미리보기 버튼
+            document.getElementById('video-preview-btn').addEventListener('click', function() {
+                document.getElementById('video-modal').classList.add('show');
+                showToast('🎥 동영상 미리보기를 시작합니다!');
+            });
+
+            // 🔒 모달 닫기
+            document.getElementById('modal-close').addEventListener('click', function() {
+                document.getElementById('video-modal').classList.remove('show');
+            });
+
+            // 🎬 데모 컨트롤
+            let isPlaying = false;
+            let demoInterval;
+
+            document.getElementById('play-demo').addEventListener('click', function() {
+                const playIcon = document.getElementById('demo-play-icon');
+                const player = document.getElementById('demo-player');
+                
+                if (!isPlaying) {
+                    isPlaying = true;
+                    playIcon.textContent = '⏸️';
+                    player.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+                    
+                    // 재생 애니메이션 시뮬레이션
+                    demoInterval = setInterval(() => {
+                        player.style.background = player.style.background.includes('ff6b6b') ? 
+                            'linear-gradient(45deg, #4ecdc4, #667eea)' : 
+                            'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+                    }, 1000);
+                    
+                    showToast('▶️ 데모 영상 재생 중...');
+                } else {
+                    stopDemo();
+                }
+            });
+
+            document.getElementById('stop-demo').addEventListener('click', stopDemo);
+
+            function stopDemo() {
+                isPlaying = false;
+                const playIcon = document.getElementById('demo-play-icon');
+                const player = document.getElementById('demo-player');
+                
+                playIcon.textContent = '▶️';
+                player.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+                
+                if (demoInterval) {
+                    clearInterval(demoInterval);
+                }
+                
+                showToast('⏹️ 데모 영상이 정지되었습니다.');
+            }
+
+            document.getElementById('fullscreen-demo').addEventListener('click', function() {
+                showToast('🔍 전체화면 기능은 실제 영상에서 지원됩니다!');
             });
 
             // 🚀 메가 생성 버튼
-            document.getElementById('mega-generate-btn').addEventListener('click', function() {
-                const script = document.getElementById('script').value;
-                if (!script.trim()) {
-                    alert('🚨 시나리오를 입력해주세요!');
+            document.getElementById('mega-generate-btn').addEventListener('click', async function() {
+                const script = document.getElementById('script').value.trim();
+                
+                if (!script) {
+                    showToast('❌ 영상 시나리오를 입력해주세요!', 4000);
+                    document.getElementById('script').focus();
                     return;
                 }
-                
-                // 설정 정보 수집
-                const selectedCharacter = document.querySelector('.voice-character-btn.active').dataset.character;
+
+                // 설정 수집
+                const selectedCharacter = document.querySelector('.voice-character-btn.active');
                 const settings = {
-                    character: selectedCharacter,
-                    speed: sliders.speed.element.value,
-                    pitch: sliders.pitch.element.value,
-                    emotion: sliders.emotion.element.value,
-                    duration: sliders.duration.element.value,
-                    effects: effects.filter(effect => {
-                        const toggle = document.getElementById(`${effect}-toggle`);
-                        return toggle && toggle.checked;
-                    })
-                };
-                
-                console.log('🎬 생성 설정:', settings);
-                
-                // 버튼 상태 변경
-                this.innerHTML = '<div class="mega-loading"><div class="loading-spinner"></div><span>AI 마스터피스 생성 중...</span></div>';
-                this.disabled = true;
-                
-                // 결과 섹션 숨기기
-                document.getElementById('mega-result-section').classList.remove('show');
-                
-                // 시뮬레이션 (5초 후 완료)
-                setTimeout(() => {
-                    // 버튼 복원
-                    this.innerHTML = '<span class="button-icon">🚀</span><span class="button-text">AI 마스터피스 생성하기</span>';
-                    this.disabled = false;
-                    
-                    // 🎉 결과 섹션 표시
-                    document.getElementById('mega-result-section').classList.add('show');
-                    
-                    // 결과 섹션으로 스크롤
-                    document.getElementById('mega-result-section').scrollIntoView({ 
-                        behavior: 'smooth' 
-                    });
-                    
-                    // 영상 제목 업데이트
-                    const videoTitles = document.querySelectorAll('.video-title');
-                    const firstLine = script.split('\n')[0].substring(0, 15);
-                    videoTitles.forEach(title => {
-                        if (title.textContent === '메인 영상' || title.textContent === '대안 버전') return;
-                        title.textContent = firstLine + (firstLine.length >= 15 ? '...' : '');
-                    });
-                    
-                    // 캐릭터 정보 업데이트
-                    const characterCard = document.querySelector('.mega-detail-card .value');
-                    if (characterCard && characterCard.textContent === '사라') {
-                        characterCard.textContent = selectedCharacter;
+                    script: script,
+                    character: selectedCharacter.dataset.character,
+                    style: selectedCharacter.dataset.style,
+                    speed: document.getElementById('speed-slider').value,
+                    pitch: document.getElementById('pitch-slider').value,
+                    emotion: document.getElementById('emotion-slider').value,
+                    duration: document.getElementById('duration-slider').value,
+                    zoom: document.getElementById('zoom-slider').value,
+                    transition: document.getElementById('transition-slider').value,
+                    effects: {
+                        particles: document.getElementById('particles-toggle').checked,
+                        gradient: document.getElementById('gradient-toggle').checked,
+                        sparkle: document.getElementById('sparkle-toggle').checked,
+                        rotation: document.getElementById('rotation-toggle').checked,
+                        wave: document.getElementById('wave-toggle').checked,
+                        fire: document.getElementById('fire-toggle').checked
                     }
-                    
-                    console.log('🎬 AI 마스터피스 생성 완료!');
-                }, 5000);
+                };
+
+                console.log('🎬 영상 생성 시작:', settings);
+
+                // UI 업데이트
+                const button = this;
+                const originalText = button.querySelector('.button-text').textContent;
+                const originalIcon = button.querySelector('.button-icon').textContent;
                 
-                console.log('🎬 AI 마스터피스 생성 시작:', script);
+                button.disabled = true;
+                button.querySelector('.button-text').textContent = '생성 중...';
+                button.querySelector('.button-icon').innerHTML = '<div class="loading-spinner"></div>';
+
+                // 진행 표시기 표시
+                const progressContainer = document.getElementById('progress-container');
+                const progressFill = document.getElementById('progress-fill');
+                const progressStage = document.getElementById('progress-stage');
+                
+                progressContainer.classList.add('show');
+
+                // 생성 과정 시뮬레이션
+                const stages = [
+                    { progress: 10, text: '🎵 AI 음성 생성 중...', delay: 1000 },
+                    { progress: 25, text: '🎨 비주얼 효과 렌더링 중...', delay: 1500 },
+                    { progress: 45, text: '🎬 영상 합성 중...', delay: 2000 },
+                    { progress: 65, text: '📝 자막 동기화 중...', delay: 1500 },
+                    { progress: 80, text: '🔄 최적화 진행 중...', delay: 1000 },
+                    { progress: 95, text: '✨ 마무리 작업 중...', delay: 800 },
+                    { progress: 100, text: '🎉 완성!', delay: 500 }
+                ];
+
+                for (let i = 0; i < stages.length; i++) {
+                    const stage = stages[i];
+                    
+                    await new Promise(resolve => {
+                        setTimeout(() => {
+                            progressFill.style.width = stage.progress + '%';
+                            progressStage.textContent = stage.text;
+                            resolve();
+                        }, stage.delay);
+                    });
+                }
+
+                // 결과 섹션 표시
+                setTimeout(() => {
+                    progressContainer.classList.remove('show');
+                    document.getElementById('mega-result-section').classList.add('show');
+                    document.getElementById('mega-result-section').scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // 버튼 복구
+                    button.disabled = false;
+                    button.querySelector('.button-text').textContent = originalText;
+                    button.querySelector('.button-icon').textContent = originalIcon;
+
+                    // 결과 데이터 업데이트
+                    updateResultData(settings);
+                    
+                    showToast('🎉 AI 마스터피스가 완성되었습니다!', 5000);
+                }, 1000);
             });
 
-            // 🔄 새 영상 만들기
-            document.getElementById('mega-new-video-btn').addEventListener('click', function() {
-                document.getElementById('mega-result-section').classList.remove('show');
-                document.querySelector('.mega-controls-section').scrollIntoView({ behavior: 'smooth' });
-                document.getElementById('script').focus();
-                console.log('🔄 새로운 마스터피스 만들기');
-            });
+            // 📊 결과 데이터 업데이트
+            function updateResultData(settings) {
+                // 캐릭터 업데이트
+                const characterCard = document.querySelector('.mega-detail-card .title:contains("AI 캐릭터")');
+                if (characterCard) {
+                    const characterName = document.querySelector('.voice-character-btn.active .character-name').textContent;
+                    characterCard.nextElementSibling.textContent = characterName;
+                }
 
-            // 💎 프리미엄 다운로드 버튼들
+                // 영상 길이 업데이트
+                const durationCards = document.querySelectorAll('.video-duration');
+                durationCards.forEach(card => {
+                    card.textContent = `0:${settings.duration.padStart(2, '0')} • 4K 품질`;
+                });
+
+                // 영상 길이 디테일 카드 업데이트
+                const durationDetailCard = Array.from(document.querySelectorAll('.mega-detail-card .title')).find(el => el.textContent === '영상 길이');
+                if (durationDetailCard) {
+                    durationDetailCard.nextElementSibling.textContent = settings.duration + '초';
+                }
+
+                // 특수 효과 개수 계산
+                const effectCount = Object.values(settings.effects).filter(Boolean).length;
+                const effectDetailCard = Array.from(document.querySelectorAll('.mega-detail-card .title')).find(el => el.textContent === '특수 효과');
+                if (effectDetailCard) {
+                    effectDetailCard.nextElementSibling.textContent = effectCount + '개 적용';
+                }
+            }
+
+            // 💎 다운로드 버튼들
             document.querySelectorAll('.premium-download-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     const type = this.dataset.type;
-                    const originalHTML = this.innerHTML;
+                    const title = this.querySelector('.download-title').textContent;
                     
                     // 다운로드 시뮬레이션
+                    const originalContent = this.innerHTML;
                     this.innerHTML = `
-                        <span class="icon">⏳</span>
+                        <span class="icon">⬇️</span>
                         <div class="download-info">
                             <div class="download-title">다운로드 중...</div>
                             <div class="download-desc">잠시만 기다려주세요</div>
@@ -1181,30 +1582,212 @@
                     `;
                     
                     setTimeout(() => {
-                        this.innerHTML = `
-                            <span class="icon">✅</span>
-                            <div class="download-info">
-                                <div class="download-title">다운로드 완료!</div>
-                                <div class="download-desc">파일이 저장되었습니다</div>
-                            </div>
-                        `;
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalHTML;
-                        }, 3000);
+                        this.innerHTML = originalContent;
+                        showToast(`✅ ${title} 다운로드가 완료되었습니다!`);
                     }, 2000);
                     
-                    console.log(`💎 프리미엄 다운로드: ${type}`);
+                    console.log(`💾 다운로드 시작: ${type}`);
                 });
             });
 
-            // 🎪 특수 효과 추가
-            setInterval(() => {
-                const glowElements = document.querySelectorAll('.glow');
-                glowElements.forEach(el => {
-                    el.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+            // 🔄 새로운 영상 만들기
+            document.getElementById('mega-new-video-btn').addEventListener('click', function() {
+                // 결과 섹션 숨기기
+                document.getElementById('mega-result-section').classList.remove('show');
+                
+                // 맨 위로 스크롤
+                document.querySelector('.mega-controls-section').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
                 });
-            }, 3000);
+                
+                // 스크립트 입력란 포커스
+                setTimeout(() => {
+                    document.getElementById('script').focus();
+                    showToast('🔄 새로운 마스터피스를 만들어보세요!');
+                }, 1000);
+            });
+
+            // 🎨 외부 클릭으로 모달 닫기
+            document.getElementById('video-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+
+            // ⌨️ ESC 키로 모달 닫기
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('video-modal').classList.remove('show');
+                }
+            });
+
+            // 🎯 통계 카운터 애니메이션
+            function animateCounters() {
+                const counters = document.querySelectorAll('.stat-number');
+                
+                counters.forEach(counter => {
+                    const target = counter.textContent;
+                    const isNumber = !isNaN(target.replace(/[^\d]/g, ''));
+                    
+                    if (isNumber) {
+                        const finalNumber = parseInt(target.replace(/[^\d]/g, ''));
+                        const suffix = target.replace(/[\d]/g, '');
+                        let current = 0;
+                        const increment = finalNumber / 50;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= finalNumber) {
+                                counter.textContent = target;
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current) + suffix;
+                            }
+                        }, 50);
+                    }
+                });
+            }
+
+            // 🌟 페이지 로딩 완료 후 카운터 애니메이션 시작
+            setTimeout(animateCounters, 500);
+
+            // 🎪 페이지 로딩 완료 알림
+            setTimeout(() => {
+                showToast('🚀 ShortsAI Pro v2.0이 준비되었습니다!', 4000);
+            }, 1000);
+
+            // 📱 반응형 체크
+            function checkMobile() {
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    console.log('📱 모바일 모드로 전환됨');
+                } else {
+                    console.log('💻 데스크톱 모드로 전환됨');
+                }
+            }
+
+            window.addEventListener('resize', checkMobile);
+            checkMobile();
+
+            // 🎨 스크롤 효과
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallax = document.querySelector('.hero::before');
+                if (parallax) {
+                    const speed = scrolled * 0.5;
+                    parallax.style.transform = `translateY(${speed}px)`;
+                }
+            });
+
+            // 🔄 자동 저장 기능 (로컬 스토리지 대신 세션 저장)
+            let autoSaveData = {};
+            
+            function autoSave() {
+                const script = document.getElementById('script').value;
+                const selectedCharacter = document.querySelector('.voice-character-btn.active');
+                
+                autoSaveData = {
+                    script: script,
+                    character: selectedCharacter ? selectedCharacter.dataset.character : 'sara',
+                    timestamp: Date.now()
+                };
+                
+                console.log('💾 설정이 자동 저장되었습니다.');
+            }
+
+            // 📝 입력 필드 변경 시 자동 저장
+            document.getElementById('script').addEventListener('input', debounce(autoSave, 1000));
+
+            // 🔧 디바운스 함수
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            // 🎵 배경 음악 컨트롤 (선택사항)
+            let audioContext;
+            
+            function initAudio() {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    console.log('🎵 오디오 컨텍스트 초기화 완료');
+                } catch (e) {
+                    console.log('🎵 오디오 컨텍스트를 사용할 수 없습니다.');
+                }
+            }
+
+            // 🎬 고급 기능: 실시간 미리보기
+            function updatePreview() {
+                const script = document.getElementById('script').value;
+                const wordCount = script.split(' ').filter(word => word.length > 0).length;
+                const estimatedDuration = Math.max(5, Math.min(60, wordCount * 0.5));
+                
+                // 예상 길이 업데이트
+                const durationSlider = document.getElementById('duration-slider');
+                if (estimatedDuration !== parseFloat(durationSlider.value)) {
+                    // 자동 조정은 하지 않고 콘솔에만 로그
+                    console.log(`📊 스크립트 분석: ${wordCount}단어, 예상 길이: ${estimatedDuration.toFixed(1)}초`);
+                }
+            }
+
+            document.getElementById('script').addEventListener('input', debounce(updatePreview, 500));
+
+            // 🏆 성취 시스템 (재미있는 기능)
+            const achievements = {
+                firstVideo: { name: '첫 영상 제작자', icon: '🥇', unlocked: false },
+                speedRunner: { name: '스피드 러너', icon: '⚡', unlocked: false },
+                effectMaster: { name: '이펙트 마스터', icon: '✨', unlocked: false },
+                scriptWriter: { name: '대본 작가', icon: '📝', unlocked: false }
+            };
+
+            function checkAchievements(action, data) {
+                switch (action) {
+                    case 'videoGenerated':
+                        if (!achievements.firstVideo.unlocked) {
+                            achievements.firstVideo.unlocked = true;
+                            showToast(`🏆 성취 달성: ${achievements.firstVideo.icon} ${achievements.firstVideo.name}!`, 4000);
+                        }
+                        break;
+                    case 'allEffectsEnabled':
+                        if (!achievements.effectMaster.unlocked) {
+                            achievements.effectMaster.unlocked = true;
+                            showToast(`🏆 성취 달성: ${achievements.effectMaster.icon} ${achievements.effectMaster.name}!`, 4000);
+                        }
+                        break;
+                    case 'longScript':
+                        if (data.wordCount > 100 && !achievements.scriptWriter.unlocked) {
+                            achievements.scriptWriter.unlocked = true;
+                            showToast(`🏆 성취 달성: ${achievements.scriptWriter.icon} ${achievements.scriptWriter.name}!`, 4000);
+                        }
+                        break;
+                }
+            }
+
+            // 🎮 키보드 단축키
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+Enter: 영상 생성
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('mega-generate-btn').click();
+                }
+                
+                // Ctrl+Shift+P: 미리보기
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'P') {
+                    e.preventDefault();
+                    document.getElementById('video-preview-btn').click();
+                }
+            });
+
+            console.log('✅ 모든 이벤트 리스너가 등록되었습니다.');
+            console.log('🎮 키보드 단축키: Ctrl+Enter (영상 생성), Ctrl+Shift+P (미리보기)');
         });
     </script>
 </body>
