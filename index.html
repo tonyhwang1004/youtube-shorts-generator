@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎬 ShortsAI - AI 영상 자동 생성기</title>
+    <title>🎬 ShortsAI Pro - AI 영상 자동 생성기</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -12,483 +12,1199 @@
             color: white; 
             min-height: 100vh; 
             padding: 20px;
+            overflow-x: hidden;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .header { text-align: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-size: 2rem; font-weight: bold; }
-        .hero { text-align: center; padding: 60px 0; }
-        .hero-title { font-size: 3rem; font-weight: 700; margin-bottom: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        /* 🌟 향상된 헤더 */
+        .header { 
+            text-align: center; 
+            padding: 30px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        .logo { 
+            font-size: 2.5rem; 
+            font-weight: bold; 
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .version-badge {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* 🎨 향상된 히어로 섹션 */
+        .hero { text-align: center; padding: 80px 0; position: relative; }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.08)"/></svg>');
+            animation: float 20s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .hero-title { font-size: 3.5rem; font-weight: 700; margin-bottom: 20px; }
         .highlight { 
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             background-clip: text;
+            animation: rainbow 3s ease-in-out infinite;
         }
-        .hero-subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px; line-height: 1.6; }
-        .stats { display: flex; justify-content: center; gap: 40px; margin: 40px 0; }
-        .stat-item { text-align: center; }
-        .stat-number { font-size: 2rem; font-weight: bold; color: #ffd700; }
-        .stat-label { font-size: 1rem; opacity: 0.8; }
-        .generate-section { 
-            background: rgba(255, 255, 255, 0.1); 
-            border-radius: 20px; 
-            padding: 40px; 
-            margin: 40px 0; 
+        @keyframes rainbow {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(180deg); }
+        }
+        
+        .hero-subtitle { font-size: 1.3rem; opacity: 0.9; margin-bottom: 50px; line-height: 1.6; }
+        
+        /* 📊 향상된 통계 섹션 */
+        .stats { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 30px; 
+            margin: 60px 0; 
+        }
+        .stat-item { 
+            text-align: center; 
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
         }
-        .section-header { text-align: center; margin-bottom: 30px; }
-        .section-header h2 { font-size: 2rem; margin-bottom: 10px; }
-        .script-input-section { margin-bottom: 30px; }
-        .script-input-section label { display: block; font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+        .stat-item:hover { transform: translateY(-5px) scale(1.05); }
+        .stat-number { 
+            font-size: 2.5rem; 
+            font-weight: bold; 
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label { font-size: 1.1rem; opacity: 0.9; margin-top: 10px; }
+        
+        /* 🎛️ 메가 컨트롤 섹션 */
+        .mega-controls-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)); 
+            border-radius: 25px; 
+            padding: 50px; 
+            margin: 50px 0; 
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { 
+            font-size: 2.5rem; 
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        /* 📝 향상된 대본 입력 */
+        .script-input-section { margin-bottom: 40px; }
+        .script-input-section label { 
+            display: block; 
+            font-size: 1.3rem; 
+            font-weight: bold; 
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
         #script {
-            width: 100%; min-height: 120px; padding: 20px; border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.3);
-            font-size: 16px; font-family: inherit; resize: vertical;
+            width: 100%; 
+            min-height: 150px; 
+            padding: 25px; 
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1); 
+            color: white; 
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 16px; 
+            font-family: inherit; 
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+        #script:focus {
+            border-color: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            background: rgba(255, 255, 255, 0.15);
         }
         #script::placeholder { color: rgba(255, 255, 255, 0.6); }
-        .advanced-controls { 
-            background: rgba(255, 255, 255, 0.1); border-radius: 15px; 
-            padding: 30px; margin: 30px 0; border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .advanced-controls h3 { font-size: 1.3rem; margin-bottom: 20px; text-align: center; }
-        .voice-style-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin: 20px 0; }
-        .voice-style-btn {
-            background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px; padding: 12px 8px; color: white; font-weight: bold;
-            cursor: pointer; transition: all 0.3s ease; text-align: center; font-size: 14px;
-        }
-        .voice-style-btn:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
-        .voice-style-btn.active { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-color: #fff; }
-        .slider-control { margin: 20px 0; }
-        .slider-control label { display: block; font-weight: bold; margin-bottom: 10px; }
-        .custom-slider { width: 100%; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.2); outline: none; -webkit-appearance: none; }
-        .custom-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); cursor: pointer;
-        }
-        .effects-toggle { display: flex; justify-content: space-around; margin: 20px 0; }
-        .effect-control { text-align: center; }
-        .effect-control label { display: block; margin-bottom: 10px; font-weight: bold; }
-        .effect-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
-        .effect-switch input { opacity: 0; width: 0; height: 0; }
-        .switch-slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(255, 255, 255, 0.2); transition: 0.4s; border-radius: 28px;
-        }
-        .switch-slider:before {
-            position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px;
-            background-color: white; transition: 0.4s; border-radius: 50%;
-        }
-        input:checked + .switch-slider { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
-        input:checked + .switch-slider:before { transform: translateX(22px); }
-        .generate-button-section { text-align: center; margin: 40px 0; }
-        .generate-button {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border: none; color: white;
-            padding: 18px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 50px;
-            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
-        }
-        .generate-button:hover { transform: translateY(-3px); }
-        .generate-button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-        .button-icon { font-size: 1.4rem; }
-        .generate-note { margin-top: 10px; opacity: 0.8; }
         
-        /* 🎬 결과 표시 섹션 */
-        .result-section {
-            background: rgba(255, 255, 255, 0.1);
+        /* 🎵 프로 음성 컨트롤 */
+        .pro-voice-controls {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.2));
             border-radius: 20px;
             padding: 40px;
             margin: 40px 0;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(78, 205, 196, 0.3);
-            display: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
-        .result-section.show { display: block; animation: slideIn 0.5s ease-out; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .pro-voice-controls h3 { 
+            font-size: 1.5rem; 
+            margin-bottom: 25px; 
+            text-align: center;
+            color: #4ecdc4;
+        }
         
-        .result-header { text-align: center; margin-bottom: 30px; }
-        .result-header h3 { font-size: 1.8rem; margin-bottom: 10px; color: #4ecdc4; }
-        
-        .video-preview-container {
-            display: flex;
-            justify-content: center;
+        /* 🎭 음성 캐릭터 선택 */
+        .voice-character-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
             margin: 30px 0;
         }
-        .video-preview {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            width: 300px;
-            height: 533px; /* 9:16 비율 */
-            position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+        .voice-character-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px 15px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 14px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            gap: 8px;
         }
-        .video-placeholder {
+        .voice-character-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .voice-character-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-color: #fff;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        .voice-character-btn .character-icon { font-size: 2rem; }
+        .voice-character-btn .character-name { font-size: 0.9rem; font-weight: bold; }
+        .voice-character-btn .character-desc { font-size: 0.7rem; opacity: 0.8; }
+        
+        /* 🎚️ 고급 슬라이더 */
+        .advanced-sliders {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .slider-group {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .slider-control { margin: 20px 0; }
+        .slider-control label { 
+            display: block; 
+            font-weight: bold; 
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: #4ecdc4;
+        }
+        .custom-slider { 
+            width: 100%; 
+            height: 8px; 
+            border-radius: 4px; 
+            background: rgba(255, 255, 255, 0.2); 
+            outline: none; 
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+        .custom-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        
+        /* 🎨 메가 비주얼 이펙트 */
+        .mega-visual-effects {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        .effects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .effect-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .effect-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .effect-card .effect-icon { font-size: 3rem; margin-bottom: 15px; }
+        .effect-card .effect-name { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
+        .effect-card .effect-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .effect-card .effect-switch input { opacity: 0; width: 0; height: 0; }
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        input:checked + .switch-slider {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+        input:checked + .switch-slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* 🚀 메가 생성 버튼 */
+        .mega-generate-section { 
+            text-align: center; 
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 25px;
+        }
+        .mega-generate-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            color: white;
+            padding: 25px 60px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .mega-generate-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .mega-generate-button:hover::before {
+            left: 100%;
+        }
+        .mega-generate-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 107, 107, 0.4);
+        }
+        .mega-generate-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .button-icon { font-size: 1.6rem; }
+        
+        /* 🎬 메가 결과 섹션 */
+        .mega-result-section {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(255, 107, 107, 0.15));
+            border-radius: 25px;
+            padding: 50px;
+            margin: 50px 0;
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(78, 205, 196, 0.3);
+            display: none;
+            position: relative;
+        }
+        .mega-result-section.show {
+            display: block;
+            animation: megaSlideIn 0.8s ease-out;
+        }
+        @keyframes megaSlideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .mega-result-header { text-align: center; margin-bottom: 40px; }
+        .mega-result-header h3 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .mega-success-message {
+            background: linear-gradient(45deg, #00b09b, #96c93d);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: pulse 2s infinite;
+            box-shadow: 0 10px 30px rgba(0, 176, 155, 0.3);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.02); }
+        }
+        
+        /* 📱 듀얼 비디오 프리뷰 */
+        .dual-video-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .video-preview-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .video-preview-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        .video-preview {
+            width: 100%;
+            max-width: 320px;
+            height: 568px;
             background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 10px;
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
             text-align: center;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
         }
-        .video-placeholder .play-icon { font-size: 4rem; margin-bottom: 20px; opacity: 0.8; }
-        .video-placeholder .video-info { padding: 20px; }
-        .video-placeholder .video-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
-        .video-placeholder .video-duration { font-size: 1rem; opacity: 0.8; }
+        .video-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .video-preview .play-icon {
+            font-size: 5rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .video-preview .play-icon:hover {
+            transform: scale(1.1);
+        }
+        .video-info .video-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .video-info .video-duration {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        .preview-type {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
         
-        .result-details {
+        /* 📊 메가 디테일 카드 */
+        .mega-result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        .mega-detail-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .mega-detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+        .mega-detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .mega-detail-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .mega-detail-card .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        .mega-detail-card .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* 💎 프리미엄 다운로드 섹션 */
+        .premium-download-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 107, 107, 0.2));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        .download-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin: 30px 0;
         }
-        .detail-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .detail-card .icon { font-size: 2rem; margin-bottom: 10px; }
-        .detail-card .title { font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; }
-        .detail-card .value { font-size: 1.3rem; color: #4ecdc4; font-weight: bold; }
-        
-        .download-section {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        .download-btn {
-            background: rgba(255, 255, 255, 0.1);
+        .premium-download-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
             border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 20px 25px;
+            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 15px;
             font-weight: bold;
             text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
-        .download-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .premium-download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
         }
-        .download-btn .icon { font-size: 1.2rem; }
+        .premium-download-btn:hover::before {
+            left: 100%;
+        }
+        .premium-download-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: #4ecdc4;
+        }
+        .premium-download-btn .icon {
+            font-size: 1.5rem;
+        }
+        .download-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .download-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        .download-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
         
-        .success-message {
-            background: linear-gradient(45deg, #00b09b, #96c93d);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
+        /* 🎭 향상된 푸터 */
+        .mega-footer {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 60px;
             text-align: center;
-            font-weight: bold;
-            animation: pulse 2s infinite;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+        .footer-section p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        .social-link:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
         
-        .footer { background: rgba(0, 0, 0, 0.2); border-radius: 15px; padding: 30px; margin-top: 40px; text-align: center; }
+        /* 📱 반응형 디자인 */
         @media (max-width: 768px) {
-            .hero-title { font-size: 2rem; }
-            .stats { flex-direction: column; gap: 20px; }
-            .voice-style-selector { grid-template-columns: repeat(2, 1fr); }
-            .effects-toggle { flex-direction: column; gap: 15px; }
-            .video-preview { width: 250px; height: 444px; }
-            .download-section { flex-direction: column; align-items: center; }
+            .hero-title { font-size: 2.5rem; }
+            .mega-controls-section { padding: 30px 20px; }
+            .voice-character-selector { grid-template-columns: repeat(2, 1fr); }
+            .advanced-sliders { grid-template-columns: 1fr; }
+            .effects-grid { grid-template-columns: repeat(2, 1fr); }
+            .dual-video-preview { grid-template-columns: 1fr; }
+            .download-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+        
+        /* 🎪 로딩 애니메이션 */
+        .mega-loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .loading-spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #4ecdc4;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ✨ 특수 효과 */
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #4ecdc4, 0 0 20px #4ecdc4, 0 0 30px #4ecdc4; }
+            to { text-shadow: 0 0 20px #ff6b6b, 0 0 30px #ff6b6b, 0 0 40px #ff6b6b; }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 🌟 향상된 헤더 -->
         <header class="header">
-            <div class="logo">🎬 ShortsAI</div>
+            <div class="version-badge">PRO v2.0</div>
+            <div class="logo glow">🎬 ShortsAI Pro</div>
         </header>
 
+        <!-- 🎨 메가 히어로 섹션 -->
         <section class="hero">
             <h1 class="hero-title">
-                AI가 만드는<br>
-                <span class="highlight">SNS 콘텐츠</span>
+                AI가 만드는 차세대<br>
+                <span class="highlight">SNS 콘텐츠 스튜디오</span>
             </h1>
             <p class="hero-subtitle">
-                대본만 입력하면 자동으로 영상, 자막, 음성이 완성됩니다.<br>
-                창고수와 크리에이터를 위한 최고의 솔루션
+                단 한 번의 클릭으로 전문가 수준의 영상, 자막, 음성을 완성하세요.<br>
+                혁신적인 AI 기술로 여러분의 창의력을 현실로 만들어드립니다.
             </p>
             
+            <!-- 📊 메가 통계 섹션 -->
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">제작된 영상</div>
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">🎬 제작된 영상</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">5분</div>
-                    <div class="stat-label">평균 제작시간</div>
+                    <div class="stat-number">30초</div>
+                    <div class="stat-label">⚡ 평균 제작시간</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">95%</div>
-                    <div class="stat-label">고객 만족도</div>
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">😍 고객 만족도</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4K</div>
+                    <div class="stat-label">📐 최대 해상도</div>
                 </div>
             </div>
         </section>
 
-        <section id="generate" class="generate-section">
+        <!-- 🎛️ 메가 컨트롤 섹션 -->
+        <section class="mega-controls-section">
             <div class="section-header">
-                <h2>🎬 AI 영상 생성기</h2>
-                <p>텍스트 대본을 입력하고 원하는 스타일을 선택하세요</p>
+                <h2>🎬 AI 영상 제작 스튜디오</h2>
+                <p>전문가급 컨트롤로 완벽한 영상을 만들어보세요</p>
             </div>
 
+            <!-- 📝 향상된 대본 입력 -->
             <div class="script-input-section">
-                <label for="script">📝 영상 대본</label>
-                <textarea id="script" placeholder="여기에 영상 대본을 입력하세요...
+                <label for="script">📝 영상 시나리오</label>
+                <textarea id="script" placeholder="여기에 영상 시나리오를 입력하세요...
 
-예: 오늘은 맛있는 요리 레시피를 소개해드릴게요. 
-간단하지만 정말 맛있는 김치볶음밥 만드는 법을 알려드릴게요!" rows="4"></textarea>
+💡 예시:
+- 요리 레시피: '오늘은 초간단 김치볶음밥을 만들어보겠습니다!'
+- 여행 브이로그: '서울 핫플레이스 BEST 5를 소개합니다!'
+- 교육 콘텐츠: '3분만에 배우는 포토샵 필수 기능들'
+- 제품 리뷰: '이 제품 정말 대박입니다! 솔직 후기 공유해요'
+
+🎯 팁: 감정과 억양을 표현하면 더 생생한 영상이 완성됩니다!" rows="6"></textarea>
             </div>
 
-            <div class="advanced-controls">
-                <h3>🎵 음성 스타일 선택</h3>
-                <div class="voice-style-selector">
-                    <button class="voice-style-btn active" data-style="natural">자연스럽게</button>
-                    <button class="voice-style-btn" data-style="dramatic">드라마틱</button>
-                    <button class="voice-style-btn" data-style="energetic">에너지틱</button>
-                    <button class="voice-style-btn" data-style="mysterious">신비로운</button>
-                    <button class="voice-style-btn" data-style="professional">전문적</button>
+            <!-- 🎵 프로 음성 컨트롤 -->
+            <div class="pro-voice-controls">
+                <h3>🎭 AI 음성 캐릭터 선택</h3>
+                <div class="voice-character-selector">
+                    <button class="voice-character-btn active" data-style="natural" data-character="sara">
+                        <div class="character-icon">👩‍💼</div>
+                        <div class="character-name">사라</div>
+                        <div class="character-desc">자연스럽고 친근한</div>
+                    </button>
+                    <button class="voice-character-btn" data-style="dramatic" data-character="james">
+                        <div class="character-icon">🎭</div>
+                        <div class="character-name">제임스</div>
+                        <div class="character-desc">드라마틱하고 강렬한</div>
+                    </button>
+                    <button class="voice-character-btn" data-style="energetic" data-character="mina">
+                        <div class="character-icon">⚡</div>
+                        <div class="character-name">미나</div>
+                        <div class="character-desc">활기차고 밝은</div>
+                    </button>
+                    <button class="voice-character-btn" data-style="mysterious" data-character="alex">
+                        <div class="character-icon">🌙</div>
+                        <div class="character-name">알렉스</div>
+                        <div class="character-desc">신비롭고 매혹적인</div>
+                    </button>
+                    <button class="voice-character-btn" data-style="professional" data-character="david">
+                        <div class="character-icon">👨‍💻</div>
+                        <div class="character-name">데이비드</div>
+                        <div class="character-desc">전문적이고 신뢰감</div>
+                    </button>
+                    <button class="voice-character-btn" data-style="cute" data-character="luna">
+                        <div class="character-icon">🌸</div>
+                        <div class="character-name">루나</div>
+                        <div class="character-desc">귀엽고 사랑스러운</div>
+                    </button>
                 </div>
 
-                <div class="slider-control">
-                    <label for="speed-slider">🏃‍♂️ 말하기 속도: <span id="speed-value">1.0x</span></label>
-                    <input type="range" id="speed-slider" class="custom-slider" min="0.5" max="2.0" step="0.1" value="1.0">
-                </div>
-
-                <div class="slider-control">
-                    <label for="pitch-slider">🎵 음성 톤: <span id="pitch-value">보통</span></label>
-                    <input type="range" id="pitch-slider" class="custom-slider" min="0.5" max="1.5" step="0.1" value="1.0">
-                </div>
-
-                <h3>✨ 시각 효과</h3>
-                <div class="effects-toggle">
-                    <div class="effect-control">
-                        <label>파티클 효과</label>
-                        <label class="effect-switch">
-                            <input type="checkbox" id="particles-toggle">
-                            <span class="switch-slider"></span>
-                        </label>
+                <!-- 🎚️ 고급 슬라이더 -->
+                <div class="advanced-sliders">
+                    <div class="slider-group">
+                        <h4>🎵 음성 설정</h4>
+                        <div class="slider-control">
+                            <label for="speed-slider">🏃‍♂️ 말하기 속도: <span id="speed-value">1.0x</span></label>
+                            <input type="range" id="speed-slider" class="custom-slider" min="0.3" max="3.0" step="0.1" value="1.0">
+                        </div>
+                        <div class="slider-control">
+                            <label for="pitch-slider">🎵 음성 톤: <span id="pitch-value">보통</span></label>
+                            <input type="range" id="pitch-slider" class="custom-slider" min="0.3" max="2.0" step="0.1" value="1.0">
+                        </div>
+                        <div class="slider-control">
+                            <label for="emotion-slider">😊 감정 강도: <span id="emotion-value">보통</span></label>
+                            <input type="range" id="emotion-slider" class="custom-slider" min="0" max="100" step="10" value="50">
+                        </div>
                     </div>
-                    <div class="effect-control">
-                        <label>그라데이션 배경</label>
-                        <label class="effect-switch">
-                            <input type="checkbox" id="gradient-toggle" checked>
-                            <span class="switch-slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="generate-button-section">
-                <button id="generate-video-btn" class="generate-button">
-                    <span class="button-icon">🤖</span>
-                    <span class="button-text">AI 영상 생성하기</span>
-                </button>
-                <p class="generate-note">평균 5분 이내에 완성됩니다</p>
-            </div>
-        </section>
-
-        <!-- 🎬 결과 표시 섹션 -->
-        <section id="result-section" class="result-section">
-            <div class="result-header">
-                <h3>🎉 AI 영상 생성 완료!</h3>
-                <div class="success-message">
-                    ✅ 고품질 YouTube Shorts가 성공적으로 생성되었습니다!
-                </div>
-            </div>
-
-            <div class="video-preview-container">
-                <div class="video-preview">
-                    <div class="video-placeholder">
-                        <div class="play-icon">▶️</div>
-                        <div class="video-info">
-                            <div class="video-title">김치볶음밥 레시피</div>
-                            <div class="video-duration">0:15 • 9:16 세로영상</div>
+                    <div class="slider-group">
+                        <h4>🎬 영상 설정</h4>
+                        <div class="slider-control">
+                            <label for="duration-slider">⏱️ 영상 길이: <span id="duration-value">15초</span></label>
+                            <input type="range" id="duration-slider" class="custom-slider" min="5" max="60" step="5" value="15">
+                        </div>
+                        <div class="slider-control">
+                            <label for="zoom-slider">🔍 줌 효과: <span id="zoom-value">보통</span></label>
+                            <input type="range" id="zoom-slider" class="custom-slider" min="0" max="100" step="10" value="30">
+                        </div>
+                        <div class="slider-control">
+                            <label for="transition-slider">🔄 전환 속도: <span id="transition-value">부드럽게</span></label>
+                            <input type="range" id="transition-slider" class="custom-slider" min="0" max="100" step="10" value="50">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="result-details">
-                <div class="detail-card">
+            <!-- 🎨 메가 비주얼 이펙트 -->
+            <div class="mega-visual-effects">
+                <h3>✨ 프리미엄 비주얼 이펙트</h3>
+                <div class="effects-grid">
+                    <div class="effect-card">
+                        <div class="effect-icon">✨</div>
+                        <div class="effect-name">파티클 효과</div>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="particles-toggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <div class="effect-card">
+                        <div class="effect-icon">🌈</div>
+                        <div class="effect-name">그라데이션 배경</div>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="gradient-toggle" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <div class="effect-card">
+                        <div class="effect-icon">💫</div>
+                        <div class="effect-name">반짝임 효과</div>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="sparkle-toggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <div class="effect-card">
+                        <div class="effect-icon">🎪</div>
+                        <div class="effect-name">3D 회전</div>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="rotation-toggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <div class="effect-card">
+                        <div class="effect-icon">🌊</div>
+                        <div class="effect-name">물결 효과</div>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="wave-toggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <div class="effect-card">
+                        <div class="effect-icon">🔥</div>
+                        <div class="effect-name">불꽃 애니메이션</div>
+                        <label class="effect-switch">
+                            <input type="checkbox" id="fire-toggle">
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🚀 메가 생성 버튼 -->
+            <div class="mega-generate-section">
+                <button id="mega-generate-btn" class="mega-generate-button">
+                    <span class="button-icon">🚀</span>
+                    <span class="button-text">AI 마스터피스 생성하기</span>
+                </button>
+                <p class="generate-note">혁신적인 AI 기술로 30초 내에 완성됩니다</p>
+            </div>
+        </section>
+
+        <!-- 🎬 메가 결과 섹션 -->
+        <section id="mega-result-section" class="mega-result-section">
+            <div class="mega-result-header">
+                <h3>🎉 AI 마스터피스 완성!</h3>
+                <div class="mega-success-message">
+                    ✅ 프로페셔널 수준의 YouTube Shorts가 성공적으로 생성되었습니다!
+                    🏆 업계 최고 품질의 영상을 경험해보세요!
+                </div>
+            </div>
+
+            <!-- 📱 듀얼 비디오 프리뷰 -->
+            <div class="dual-video-preview">
+                <div class="video-preview-card">
+                    <div class="video-preview">
+                        <div class="play-icon">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">메인 영상</div>
+                            <div class="video-duration">0:15 • 4K 품질</div>
+                        </div>
+                    </div>
+                    <div class="preview-type">📱 모바일 최적화</div>
+                </div>
+                <div class="video-preview-card">
+                    <div class="video-preview">
+                        <div class="play-icon">🎬</div>
+                        <div class="video-info">
+                            <div class="video-title">대안 버전</div>
+                            <div class="video-duration">0:15 • HD 품질</div>
+                        </div>
+                    </div>
+                    <div class="preview-type">💻 데스크톱 버전</div>
+                </div>
+            </div>
+
+            <!-- 📊 메가 디테일 카드 -->
+            <div class="mega-result-details">
+                <div class="mega-detail-card">
                     <div class="icon">🎵</div>
                     <div class="title">음성 품질</div>
-                    <div class="value">프리미엄</div>
+                    <div class="value">스튜디오급</div>
                 </div>
-                <div class="detail-card">
+                <div class="mega-detail-card">
                     <div class="icon">📐</div>
                     <div class="title">해상도</div>
-                    <div class="value">1080x1920</div>
+                    <div class="value">4K UHD</div>
                 </div>
-                <div class="detail-card">
+                <div class="mega-detail-card">
                     <div class="icon">⏱️</div>
                     <div class="title">영상 길이</div>
                     <div class="value">15초</div>
                 </div>
-                <div class="detail-card">
+                <div class="mega-detail-card">
                     <div class="icon">💾</div>
                     <div class="title">파일 크기</div>
-                    <div class="value">2.3MB</div>
+                    <div class="value">8.7MB</div>
+                </div>
+                <div class="mega-detail-card">
+                    <div class="icon">🎭</div>
+                    <div class="title">AI 캐릭터</div>
+                    <div class="value">사라</div>
+                </div>
+                <div class="mega-detail-card">
+                    <div class="icon">✨</div>
+                    <div class="title">특수 효과</div>
+                    <div class="value">5개 적용</div>
                 </div>
             </div>
 
-            <div class="download-section">
-                <a href="#" class="download-btn" data-type="video">
-                    <span class="icon">📹</span>
-                    <span>영상 다운로드 (MP4)</span>
-                </a>
-                <a href="#" class="download-btn" data-type="audio">
-                    <span class="icon">🎵</span>
-                    <span>음성 다운로드 (WAV)</span>
-                </a>
-                <a href="#" class="download-btn" data-type="subtitle">
-                    <span class="icon">📝</span>
-                    <span>자막 다운로드 (SRT)</span>
-                </a>
+            <!-- 💎 프리미엄 다운로드 섹션 -->
+            <div class="premium-download-section">
+                <h3 style="text-align: center; margin-bottom: 30px; color: #4ecdc4;">💎 프리미엄 다운로드</h3>
+                <div class="download-grid">
+                    <a href="#" class="premium-download-btn" data-type="video-4k">
+                        <span class="icon">🎬</span>
+                        <div class="download-info">
+                            <div class="download-title">4K 영상 (MP4)</div>
+                            <div class="download-desc">Ultra HD 품질, 8.7MB</div>
+                        </div>
+                    </a>
+                    <a href="#" class="premium-download-btn" data-type="video-hd">
+                        <span class="icon">📹</span>
+                        <div class="download-info">
+                            <div class="download-title">HD 영상 (MP4)</div>
+                            <div class="download-desc">고품질, 3.2MB</div>
+                        </div>
+                    </a>
+                    <a href="#" class="premium-download-btn" data-type="audio-premium">
+                        <span class="icon">🎵</span>
+                        <div class="download-info">
+                            <div class="download-title">스튜디오 음성 (WAV)</div>
+                            <div class="download-desc">무손실 품질, 2.1MB</div>
+                        </div>
+                    </a>
+                    <a href="#" class="premium-download-btn" data-type="audio-mp3">
+                        <span class="icon">🎧</span>
+                        <div class="download-info">
+                            <div class="download-title">압축 음성 (MP3)</div>
+                            <div class="download-desc">고품질 압축, 850KB</div>
+                        </div>
+                    </a>
+                    <a href="#" class="premium-download-btn" data-type="subtitle-srt">
+                        <span class="icon">📝</span>
+                        <div class="download-info">
+                            <div class="download-title">자막 파일 (SRT)</div>
+                            <div class="download-desc">타임코드 포함, 2KB</div>
+                        </div>
+                    </a>
+                    <a href="#" class="premium-download-btn" data-type="project">
+                        <span class="icon">📁</span>
+                        <div class="download-info">
+                            <div class="download-title">프로젝트 파일</div>
+                            <div class="download-desc">편집 가능한 원본</div>
+                        </div>
+                    </a>
+                </div>
             </div>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <button id="generate-new-btn" class="generate-button">
+            <div style="text-align: center; margin-top: 40px;">
+                <button id="mega-new-video-btn" class="mega-generate-button">
                     <span class="button-icon">🔄</span>
-                    <span class="button-text">새 영상 만들기</span>
+                    <span class="button-text">새로운 마스터피스 만들기</span>
                 </button>
             </div>
         </section>
 
-        <footer class="footer">
+        <!-- 🎭 메가 푸터 -->
+        <footer class="mega-footer">
             <div class="footer-content">
-                <h4>🎬 ShortsAI</h4>
-                <p>AI가 만드는 SNS 콘텐츠 생성기</p>
-                <p>GitHub: tonyhwang1004 | Made with ❤️ by Tony Hwang</p>
+                <div class="footer-section">
+                    <h4>🎬 ShortsAI Pro</h4>
+                    <p>AI 기술로 만드는 차세대 SNS 콘텐츠 스튜디오. 전문가급 영상을 몇 초 만에 완성하세요.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>🚀 새로운 기능</h4>
+                    <p>• 6가지 AI 음성 캐릭터<br>• 4K UHD 해상도 지원<br>• 6가지 프리미엄 효과<br>• 듀얼 영상 생성</p>
+                </div>
+                <div class="footer-section">
+                    <h4>📞 연락처</h4>
+                    <p>GitHub: tonyhwang1004<br>Email: ai@shortsai.pro<br>Discord: ShortsAI Community</p>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">📱</a>
+                <a href="#" class="social-link">💻</a>
+                <a href="#" class="social-link">🎮</a>
+                <a href="#" class="social-link">📺</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShortsAI Pro. Made with ❤️ and 🤖 by Tony Hwang</p>
             </div>
         </footer>
     </div>
 
     <script>
-        // 🎛️ 고급 컨트롤 JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 ShortsAI 로딩 완료!');
+            console.log('🚀 ShortsAI Pro v2.0 로딩 완료!');
             
-            // 음성 스타일 버튼 이벤트
-            document.querySelectorAll('.voice-style-btn').forEach(btn => {
+            // 🎭 음성 캐릭터 선택
+            document.querySelectorAll('.voice-character-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    document.querySelectorAll('.voice-style-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.voice-character-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    console.log('🎵 음성 스타일:', this.dataset.style);
+                    const character = this.dataset.character;
+                    const style = this.dataset.style;
+                    console.log(`🎵 선택된 캐릭터: ${character} (${style})`);
                 });
             });
 
-            // 속도 슬라이더
-            const speedSlider = document.getElementById('speed-slider');
-            const speedValue = document.getElementById('speed-value');
-            speedSlider.addEventListener('input', function() {
-                speedValue.textContent = this.value + 'x';
-                console.log('🏃‍♂️ 속도:', this.value);
+            // 🎚️ 고급 슬라이더들
+            const sliders = {
+                speed: { element: document.getElementById('speed-slider'), value: document.getElementById('speed-value'), suffix: 'x' },
+                pitch: { element: document.getElementById('pitch-slider'), value: document.getElementById('pitch-value'), 
+                         format: (val) => val < 0.7 ? '매우 낮음' : val < 0.9 ? '낮음' : val < 1.1 ? '보통' : val < 1.3 ? '높음' : '매우 높음' },
+                emotion: { element: document.getElementById('emotion-slider'), value: document.getElementById('emotion-value'),
+                          format: (val) => val < 20 ? '차분함' : val < 40 ? '온화함' : val < 60 ? '보통' : val < 80 ? '활발함' : '열정적' },
+                duration: { element: document.getElementById('duration-slider'), value: document.getElementById('duration-value'), suffix: '초' },
+                zoom: { element: document.getElementById('zoom-slider'), value: document.getElementById('zoom-value'),
+                       format: (val) => val < 20 ? '최소' : val < 40 ? '약간' : val < 60 ? '보통' : val < 80 ? '강함' : '최대' },
+                transition: { element: document.getElementById('transition-slider'), value: document.getElementById('transition-value'),
+                             format: (val) => val < 20 ? '매우 천천히' : val < 40 ? '천천히' : val < 60 ? '부드럽게' : val < 80 ? '빠르게' : '매우 빠르게' }
+            };
+
+            Object.entries(sliders).forEach(([key, config]) => {
+                if (config.element) {
+                    config.element.addEventListener('input', function() {
+                        const val = parseFloat(this.value);
+                        if (config.format) {
+                            config.value.textContent = config.format(val);
+                        } else {
+                            config.value.textContent = val + (config.suffix || '');
+                        }
+                        console.log(`🎛️ ${key}: ${val}`);
+                    });
+                }
             });
 
-            // 피치 슬라이더
-            const pitchSlider = document.getElementById('pitch-slider');
-            const pitchValue = document.getElementById('pitch-value');
-            pitchSlider.addEventListener('input', function() {
-                const pitch = parseFloat(this.value);
-                const text = pitch < 0.8 ? '낮음' : pitch > 1.2 ? '높음' : '보통';
-                pitchValue.textContent = text;
-                console.log('🎵 피치:', pitch);
+            // ✨ 효과 토글들
+            const effects = ['particles', 'gradient', 'sparkle', 'rotation', 'wave', 'fire'];
+            effects.forEach(effect => {
+                const toggle = document.getElementById(`${effect}-toggle`);
+                if (toggle) {
+                    toggle.addEventListener('change', function() {
+                        console.log(`✨ ${effect} 효과: ${this.checked ? 'ON' : 'OFF'}`);
+                    });
+                }
             });
 
-            // 🎬 생성 버튼 - 결과 표시 포함
-            document.getElementById('generate-video-btn').addEventListener('click', function() {
+            // 🚀 메가 생성 버튼
+            document.getElementById('mega-generate-btn').addEventListener('click', function() {
                 const script = document.getElementById('script').value;
                 if (!script.trim()) {
-                    alert('🚨 대본을 입력해주세요!');
+                    alert('🚨 시나리오를 입력해주세요!');
                     return;
                 }
                 
+                // 설정 정보 수집
+                const selectedCharacter = document.querySelector('.voice-character-btn.active').dataset.character;
+                const settings = {
+                    character: selectedCharacter,
+                    speed: sliders.speed.element.value,
+                    pitch: sliders.pitch.element.value,
+                    emotion: sliders.emotion.element.value,
+                    duration: sliders.duration.element.value,
+                    effects: effects.filter(effect => {
+                        const toggle = document.getElementById(`${effect}-toggle`);
+                        return toggle && toggle.checked;
+                    })
+                };
+                
+                console.log('🎬 생성 설정:', settings);
+                
                 // 버튼 상태 변경
-                this.innerHTML = '<span class="button-icon">⏳</span><span class="button-text">AI 영상 생성 중...</span>';
+                this.innerHTML = '<div class="mega-loading"><div class="loading-spinner"></div><span>AI 마스터피스 생성 중...</span></div>';
                 this.disabled = true;
                 
                 // 결과 섹션 숨기기
-                document.getElementById('result-section').classList.remove('show');
+                document.getElementById('mega-result-section').classList.remove('show');
                 
-                // 시뮬레이션 (3초 후 완료)
+                // 시뮬레이션 (5초 후 완료)
                 setTimeout(() => {
                     // 버튼 복원
-                    this.innerHTML = '<span class="button-icon">🤖</span><span class="button-text">AI 영상 생성하기</span>';
+                    this.innerHTML = '<span class="button-icon">🚀</span><span class="button-text">AI 마스터피스 생성하기</span>';
                     this.disabled = false;
                     
-                    // 결과 섹션 표시
-                    document.getElementById('result-section').classList.add('show');
+                    // 🎉 결과 섹션 표시
+                    document.getElementById('mega-result-section').classList.add('show');
                     
                     // 결과 섹션으로 스크롤
-                    document.getElementById('result-section').scrollIntoView({ 
+                    document.getElementById('mega-result-section').scrollIntoView({ 
                         behavior: 'smooth' 
                     });
                     
                     // 영상 제목 업데이트
-                    const videoTitle = document.querySelector('.video-title');
-                    const firstLine = script.split('\n')[0].substring(0, 20);
-                    videoTitle.textContent = firstLine + (firstLine.length >= 20 ? '...' : '');
+                    const videoTitles = document.querySelectorAll('.video-title');
+                    const firstLine = script.split('\n')[0].substring(0, 15);
+                    videoTitles.forEach(title => {
+                        if (title.textContent === '메인 영상' || title.textContent === '대안 버전') return;
+                        title.textContent = firstLine + (firstLine.length >= 15 ? '...' : '');
+                    });
                     
-                }, 3000);
+                    // 캐릭터 정보 업데이트
+                    const characterCard = document.querySelector('.mega-detail-card .value');
+                    if (characterCard && characterCard.textContent === '사라') {
+                        characterCard.textContent = selectedCharacter;
+                    }
+                    
+                    console.log('🎬 AI 마스터피스 생성 완료!');
+                }, 5000);
                 
-                console.log('🎬 영상 생성 시작:', script);
+                console.log('🎬 AI 마스터피스 생성 시작:', script);
             });
 
-            // 새 영상 만들기 버튼
-            document.getElementById('generate-new-btn').addEventListener('click', function() {
-                // 결과 섹션 숨기기
-                document.getElementById('result-section').classList.remove('show');
-                
-                // 생성 섹션으로 스크롤
-                document.getElementById('generate').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
-                
-                // 대본 입력창 포커스
+            // 🔄 새 영상 만들기
+            document.getElementById('mega-new-video-btn').addEventListener('click', function() {
+                document.getElementById('mega-result-section').classList.remove('show');
+                document.querySelector('.mega-controls-section').scrollIntoView({ behavior: 'smooth' });
                 document.getElementById('script').focus();
+                console.log('🔄 새로운 마스터피스 만들기');
             });
 
-            // 다운로드 버튼들
-            document.querySelectorAll('.download-btn').forEach(btn => {
+            // 💎 프리미엄 다운로드 버튼들
+            document.querySelectorAll('.premium-download-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     const type = this.dataset.type;
-                    const fileName = `shorts-ai-video.${type === 'video' ? 'mp4' : type === 'audio' ? 'wav' : 'srt'}`;
+                    const originalHTML = this.innerHTML;
                     
-                    // 실제로는 서버에서 파일을 생성하고 다운로드
-                    // 여기서는 시뮬레이션
-                    console.log(`📥 다운로드 시작: ${fileName}`);
-                    
-                    // 다운로드 시뮬레이션 알림
-                    const originalText = this.innerHTML;
-                    this.innerHTML = '<span class="icon">⏳</span><span>다운로드 중...</span>';
+                    // 다운로드 시뮬레이션
+                    this.innerHTML = `
+                        <span class="icon">⏳</span>
+                        <div class="download-info">
+                            <div class="download-title">다운로드 중...</div>
+                            <div class="download-desc">잠시만 기다려주세요</div>
+                        </div>
+                    `;
                     
                     setTimeout(() => {
-                        this.innerHTML = '<span class="icon">✅</span><span>다운로드 완료!</span>';
+                        this.innerHTML = `
+                            <span class="icon">✅</span>
+                            <div class="download-info">
+                                <div class="download-title">다운로드 완료!</div>
+                                <div class="download-desc">파일이 저장되었습니다</div>
+                            </div>
+                        `;
+                        
                         setTimeout(() => {
-                            this.innerHTML = originalText;
-                        }, 2000);
-                    }, 1500);
+                            this.innerHTML = originalHTML;
+                        }, 3000);
+                    }, 2000);
+                    
+                    console.log(`💎 프리미엄 다운로드: ${type}`);
                 });
             });
+
+            // 🎪 특수 효과 추가
+            setInterval(() => {
+                const glowElements = document.querySelectorAll('.glow');
+                glowElements.forEach(el => {
+                    el.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+                });
+            }, 3000);
         });
     </script>
 </body>
