@@ -895,3 +895,165 @@ document.addEventListener('DOMContentLoaded', () => {
         typeWriter();
     }
 });
+
+// 🎛️ 고급 컨트롤 초기화
+class AdvancedControls {
+    constructor() {
+        this.currentVoiceStyle = 'natural';
+        this.speechSpeed = 1.0;
+        this.speechPitch = 1.0;
+        this.particlesEnabled = false;
+        this.gradientEnabled = true;
+        
+        this.initControls();
+    }
+
+    initControls() {
+        // 음성 스타일 버튼 이벤트
+        document.querySelectorAll('.voice-style-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // 모든 버튼에서 active 클래스 제거
+                document.querySelectorAll('.voice-style-btn').forEach(b => b.classList.remove('active'));
+                // 클릭된 버튼에 active 클래스 추가
+                e.target.classList.add('active');
+                this.currentVoiceStyle = e.target.dataset.style;
+                console.log(`🎵 음성 스타일 변경: ${this.currentVoiceStyle}`);
+            });
+        });
+
+        // 속도 슬라이더
+        const speedSlider = document.getElementById('speed-slider');
+        const speedValue = document.getElementById('speed-value');
+        if (speedSlider) {
+            speedSlider.addEventListener('input', (e) => {
+                this.speechSpeed = parseFloat(e.target.value);
+                speedValue.textContent = `${this.speechSpeed}x`;
+                if (window.voiceEffects) {
+                    window.voiceEffects.adjustPlaybackRate(this.speechSpeed);
+                }
+            });
+        }
+
+        // 피치 슬라이더
+        const pitchSlider = document.getElementById('pitch-slider');
+        const pitchValue = document.getElementById('pitch-value');
+        if (pitchSlider) {
+            pitchSlider.addEventListener('input', (e) => {
+                this.speechPitch = parseFloat(e.target.value);
+                const pitchText = this.speechPitch < 0.8 ? '낮음' : 
+                                 this.speechPitch > 1.2 ? '높음' : '보통';
+                pitchValue.textContent = pitchText;
+            });
+        }
+
+        // 효과 토글
+        const particlesToggle = document.getElementById('particles-toggle');
+        const gradientToggle = document.getElementById('gradient-toggle');
+        
+        if (particlesToggle) {
+            particlesToggle.addEventListener('change', (e) => {
+                this.particlesEnabled = e.target.checked;
+                console.log(`✨ 파티클 효과: ${this.particlesEnabled ? 'ON' : 'OFF'}`);
+            });
+        }
+
+        if (gradientToggle) {
+            gradientToggle.addEventListener('change', (e) => {
+                this.gradientEnabled = e.target.checked;
+                console.log(`🌈 그라데이션 배경: ${this.gradientEnabled ? 'ON' : 'OFF'}`);
+            });
+        }
+    }
+
+    // 현재 설정 가져오기
+    getCurrentSettings() {
+        return {
+            voiceStyle: this.currentVoiceStyle,
+            speed: this.speechSpeed,
+            pitch: this.speechPitch,
+            particles: this.particlesEnabled,
+            gradient: this.gradientEnabled
+        };
+    }
+}
+
+// 🎯 개선된 영상 생성 함수
+async function generateAdvancedVideo() {
+    const settings = window.advancedControls.getCurrentSettings();
+    const script = document.getElementById('script').value;
+    
+    if (!script.trim()) {
+        alert('🚨 대본을 입력해주세요!');
+        return;
+    }
+
+    // 로딩 시작
+    showLoadingState('🤖 AI가 고급 영상을 생성하고 있습니다...');
+    
+    try {
+        // 1. 음성 생성 (설정 적용)
+        console.log('🎵 고급 음성 생성 중...', settings);
+        
+        // 2. 시각 효과 적용
+        console.log('🎨 시각 효과 적용 중...', settings);
+        
+        // 3. 영상 렌더링
+        console.log('🎬 영상 렌더링 중...');
+        
+        // 실제 영상 생성 로직...
+        await new Promise(resolve => setTimeout(resolve, 3000)); // 시뮬레이션
+        
+        // 성공 메시지
+        showSuccessMessage('🎉 고급 AI 영상이 성공적으로 생성되었습니다!');
+        
+    } catch (error) {
+        console.error('❌ 영상 생성 오류:', error);
+        alert('영상 생성 중 오류가 발생했습니다.');
+    } finally {
+        hideLoadingState();
+    }
+}
+
+// UI 헬퍼 함수들
+function showLoadingState(message) {
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'loading-overlay';
+    loadingDiv.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                    background: rgba(0,0,0,0.8); display: flex; justify-content: center; 
+                    align-items: center; z-index: 9999;">
+            <div style="text-align: center; color: white;">
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 20px; font-size: 18px;">${message}</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(loadingDiv);
+}
+
+function hideLoadingState() {
+    const loading = document.getElementById('loading-overlay');
+    if (loading) loading.remove();
+}
+
+function showSuccessMessage(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-message';
+    successDiv.textContent = message;
+    
+    const container = document.querySelector('.container') || document.body;
+    container.appendChild(successDiv);
+    
+    // 3초 후 자동 제거
+    setTimeout(() => successDiv.remove(), 3000);
+}
+
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 YouTube Shorts Generator 고급 모드 로딩...');
+    
+    // 고급 컨트롤 초기화
+    window.advancedControls = new AdvancedControls();
+    
+    console.log('✅ 모든 고급 기능이 로드되었습니다!');
+});

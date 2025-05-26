@@ -1,1 +1,181 @@
 [새로운 CSS 코드]
+
+/* 🎨 새로운 UI 컨포넌트 */
+.advanced-controls {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.voice-style-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.voice-style-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.voice-style-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.voice-style-btn.active {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border-color: #fff;
+}
+
+/* 🎛️ 슬라이더 컨트롤 */
+.slider-control {
+    margin: 15px 0;
+}
+
+.slider-control label {
+    display: block;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.custom-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.custom-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* 🌟 파티클 효과 토글 */
+.effects-toggle {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.effect-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.effect-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .switch-slider {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+}
+
+input:checked + .switch-slider:before {
+    transform: translateX(26px);
+}
+
+/* 📱 모바일 최적화 */
+@media (max-width: 768px) {
+    .advanced-controls {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .voice-style-selector {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .voice-style-btn {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+/* 🎭 로딩 애니메이션 개선 */
+.loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ff6b6b;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 🚀 성공 메시지 스타일 */
+.success-message {
+    background: linear-gradient(45deg, #00b09b, #96c93d);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 176, 155, 0.3);
+}

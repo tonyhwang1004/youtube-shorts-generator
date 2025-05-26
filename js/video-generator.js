@@ -316,3 +316,110 @@ class VideoGenerator {
 
 // 전역으로 사용할 수 있도록 export
 window.VideoGenerator = VideoGenerator;
+
+// 🌈 새로운 시각 효과 클래스
+class AdvancedVisualEffects {
+    constructor(canvas, context) {
+        this.canvas = canvas;
+        this.ctx = context;
+        this.particles = [];
+        this.gradients = this.createGradients();
+    }
+
+    // 🎨 그라데이션 생성
+    createGradients() {
+        const gradients = {};
+        
+        // 모던 그라데이션
+        gradients.modern = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+        gradients.modern.addColorStop(0, '#667eea');
+        gradients.modern.addColorStop(1, '#764ba2');
+        
+        // 시네마틱 그라데이션
+        gradients.cinematic = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+        gradients.cinematic.addColorStop(0, '#434343');
+        gradients.cinematic.addColorStop(1, '#000000');
+        
+        // 생동감 그라데이션
+        gradients.vibrant = this.ctx.createRadialGradient(
+            this.canvas.width/2, this.canvas.height/2, 0,
+            this.canvas.width/2, this.canvas.height/2, this.canvas.width/2
+        );
+        gradients.vibrant.addColorStop(0, '#ff6b6b');
+        gradients.vibrant.addColorStop(0.5, '#4ecdc4');
+        gradients.vibrant.addColorStop(1, '#45b7d1');
+        
+        return gradients;
+    }
+
+    // ✨ 파티클 효과
+    addParticles(count = 50) {
+        for (let i = 0; i < count; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                size: Math.random() * 3 + 1,
+                opacity: Math.random() * 0.5 + 0.3,
+                color: `hsl(${Math.random() * 360}, 70%, 60%)`
+            });
+        }
+    }
+
+    // 🌟 파티클 애니메이션
+    animateParticles() {
+        this.particles.forEach((particle, index) => {
+            // 파티클 이동
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            
+            // 경계 체크
+            if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+            if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+            
+            // 파티클 그리기
+            this.ctx.save();
+            this.ctx.globalAlpha = particle.opacity;
+            this.ctx.fillStyle = particle.color;
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.restore();
+        });
+    }
+
+    // 🎬 영화 같은 텍스트 효과
+    renderCinematicText(text, x, y, style = 'modern') {
+        const gradient = this.gradients[style] || this.gradients.modern;
+        
+        this.ctx.save();
+        
+        // 그림자 효과
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        this.ctx.shadowBlur = 10;
+        this.ctx.shadowOffsetX = 3;
+        this.ctx.shadowOffsetY = 3;
+        
+        // 텍스트 스타일
+        this.ctx.fillStyle = gradient;
+        this.ctx.font = 'bold 48px "Noto Sans KR", Arial, sans-serif';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        
+        // 외곽선
+        this.ctx.strokeStyle = '#ffffff';
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeText(text, x, y);
+        
+        // 메인 텍스트
+        this.ctx.fillText(text, x, y);
+        
+        this.ctx.restore();
+    }
+}
+
+// 기존 비디오 생성기에 통합
+if (typeof window.videoGenerator !== 'undefined') {
+    window.videoGenerator.visualEffects = AdvancedVisualEffects;
+}

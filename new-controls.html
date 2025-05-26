@@ -1,0 +1,41 @@
+<!-- 🎛️ 고급 컨트롤 패널 -->
+<div class="advanced-controls">
+    <h3>🎵 음성 스타일 선택</h3>
+    <div class="voice-style-selector">
+        <button class="voice-style-btn active" data-style="natural">자연스럽게</button>
+        <button class="voice-style-btn" data-style="dramatic">드라마틱</button>
+        <button class="voice-style-btn" data-style="energetic">에너지틱</button>
+        <button class="voice-style-btn" data-style="mysterious">신비로운</button>
+        <button class="voice-style-btn" data-style="professional">전문적</button>
+    </div>
+
+    <div class="slider-control">
+        <label for="speed-slider">🏃‍♂️ 말하기 속도: <span id="speed-value">1.0x</span></label>
+        <input type="range" id="speed-slider" class="custom-slider" 
+               min="0.5" max="2.0" step="0.1" value="1.0">
+    </div>
+
+    <div class="slider-control">
+        <label for="pitch-slider">🎵 음성 톤: <span id="pitch-value">보통</span></label>
+        <input type="range" id="pitch-slider" class="custom-slider" 
+               min="0.5" max="1.5" step="0.1" value="1.0">
+    </div>
+
+    <h3>✨ 시각 효과</h3>
+    <div class="effects-toggle">
+        <div class="effect-control">
+            <label>파티클 효과</label>
+            <label class="effect-switch">
+                <input type="checkbox" id="particles-toggle">
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+        <div class="effect-control">
+            <label>그라데이션 배경</label>
+            <label class="effect-switch">
+                <input type="checkbox" id="gradient-toggle" checked>
+                <span class="switch-slider"></span>
+            </label>
+        </div>
+    </div>
+</div>
