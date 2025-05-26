@@ -92,7 +92,7 @@
         .button-icon { font-size: 1.4rem; }
         .generate-note { margin-top: 10px; opacity: 0.8; }
         
-        /* 🎬 결과 표시 섹션 - 핵심! */
+        /* 🎬 결과 표시 섹션 */
         .result-section {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
@@ -102,21 +102,11 @@
             border: 2px solid rgba(78, 205, 196, 0.3);
             display: none;
         }
-        .result-section.show { 
-            display: block; 
-            animation: slideIn 0.5s ease-out; 
-        }
-        @keyframes slideIn { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
+        .result-section.show { display: block; animation: slideIn 0.5s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
         .result-header { text-align: center; margin-bottom: 30px; }
-        .result-header h3 { 
-            font-size: 1.8rem; 
-            margin-bottom: 10px; 
-            color: #4ecdc4; 
-        }
+        .result-header h3 { font-size: 1.8rem; margin-bottom: 10px; color: #4ecdc4; }
         
         .video-preview-container {
             display: flex;
@@ -148,23 +138,10 @@
             color: white;
             text-align: center;
         }
-        .video-placeholder .play-icon { 
-            font-size: 4rem; 
-            margin-bottom: 20px; 
-            opacity: 0.8; 
-        }
-        .video-placeholder .video-info { 
-            padding: 20px; 
-        }
-        .video-placeholder .video-title { 
-            font-size: 1.2rem; 
-            font-weight: bold; 
-            margin-bottom: 10px; 
-        }
-        .video-placeholder .video-duration { 
-            font-size: 1rem; 
-            opacity: 0.8; 
-        }
+        .video-placeholder .play-icon { font-size: 4rem; margin-bottom: 20px; opacity: 0.8; }
+        .video-placeholder .video-info { padding: 20px; }
+        .video-placeholder .video-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+        .video-placeholder .video-duration { font-size: 1rem; opacity: 0.8; }
         
         .result-details {
             display: grid;
@@ -179,20 +156,9 @@
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .detail-card .icon { 
-            font-size: 2rem; 
-            margin-bottom: 10px; 
-        }
-        .detail-card .title { 
-            font-size: 1.1rem; 
-            font-weight: bold; 
-            margin-bottom: 8px; 
-        }
-        .detail-card .value { 
-            font-size: 1.3rem; 
-            color: #4ecdc4; 
-            font-weight: bold; 
-        }
+        .detail-card .icon { font-size: 2rem; margin-bottom: 10px; }
+        .detail-card .title { font-size: 1.1rem; font-weight: bold; margin-bottom: 8px; }
+        .detail-card .value { font-size: 1.3rem; color: #4ecdc4; font-weight: bold; }
         
         .download-section {
             display: flex;
@@ -220,9 +186,7 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        .download-btn .icon { 
-            font-size: 1.2rem; 
-        }
+        .download-btn .icon { font-size: 1.2rem; }
         
         .success-message {
             background: linear-gradient(45deg, #00b09b, #96c93d);
@@ -234,19 +198,9 @@
             font-weight: bold;
             animation: pulse 2s infinite;
         }
-        @keyframes pulse { 
-            0%, 100% { opacity: 1; } 
-            50% { opacity: 0.8; } 
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
         
-        .footer { 
-            background: rgba(0, 0, 0, 0.2); 
-            border-radius: 15px; 
-            padding: 30px; 
-            margin-top: 40px; 
-            text-align: center; 
-        }
-        
+        .footer { background: rgba(0, 0, 0, 0.2); border-radius: 15px; padding: 30px; margin-top: 40px; text-align: center; }
         @media (max-width: 768px) {
             .hero-title { font-size: 2rem; }
             .stats { flex-direction: column; gap: 20px; }
@@ -351,7 +305,7 @@
             </div>
         </section>
 
-        <!-- 🎬 결과 표시 섹션 - 중요한 새 기능! -->
+        <!-- 🎬 결과 표시 섹션 -->
         <section id="result-section" class="result-section">
             <div class="result-header">
                 <h3>🎉 AI 영상 생성 완료!</h3>
@@ -428,8 +382,9 @@
     </div>
 
     <script>
+        // 🎛️ 고급 컨트롤 JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 ShortsAI 완전 버전 로딩 완료!');
+            console.log('🚀 ShortsAI 로딩 완료!');
             
             // 음성 스타일 버튼 이벤트
             document.querySelectorAll('.voice-style-btn').forEach(btn => {
@@ -458,7 +413,7 @@
                 console.log('🎵 피치:', pitch);
             });
 
-            // 🎬 생성 버튼 - 결과 표시 기능 포함!
+            // 🎬 생성 버튼 - 결과 표시 포함
             document.getElementById('generate-video-btn').addEventListener('click', function() {
                 const script = document.getElementById('script').value;
                 if (!script.trim()) {
@@ -479,7 +434,7 @@
                     this.innerHTML = '<span class="button-icon">🤖</span><span class="button-text">AI 영상 생성하기</span>';
                     this.disabled = false;
                     
-                    // 🎉 결과 섹션 표시 - 핵심 기능!
+                    // 결과 섹션 표시
                     document.getElementById('result-section').classList.add('show');
                     
                     // 결과 섹션으로 스크롤
@@ -492,7 +447,6 @@
                     const firstLine = script.split('\n')[0].substring(0, 20);
                     videoTitle.textContent = firstLine + (firstLine.length >= 20 ? '...' : '');
                     
-                    console.log('🎬 영상 생성 완료!');
                 }, 3000);
                 
                 console.log('🎬 영상 생성 시작:', script);
@@ -510,7 +464,6 @@
                 
                 // 대본 입력창 포커스
                 document.getElementById('script').focus();
-                console.log('🔄 새 영상 만들기');
             });
 
             // 다운로드 버튼들
@@ -520,9 +473,11 @@
                     const type = this.dataset.type;
                     const fileName = `shorts-ai-video.${type === 'video' ? 'mp4' : type === 'audio' ? 'wav' : 'srt'}`;
                     
+                    // 실제로는 서버에서 파일을 생성하고 다운로드
+                    // 여기서는 시뮬레이션
                     console.log(`📥 다운로드 시작: ${fileName}`);
                     
-                    // 다운로드 시뮬레이션
+                    // 다운로드 시뮬레이션 알림
                     const originalText = this.innerHTML;
                     this.innerHTML = '<span class="icon">⏳</span><span>다운로드 중...</span>';
                     
