@@ -1,22 +1,22 @@
 #!/bin/bash
 
-echo "🔄 GitHub 자동 동기화 시작..."
-cd ~/youtube-shorts-generator/
+echo "👀 파일 변경 실시간 감지 시작..."
+echo "Ctrl+C로 중지"
 
-# Git 설정 확인
-if [ ! -d ".git" ]; then
-    echo "🔧 Git 초기 설정"
-    git init
-    git remote add origin https://github.com/tonyhwang1004/youtube-shorts-generator.git
-fi
-
-# 변경사항이 있는지 확인
-if [ -n "$(git status --porcelain)" ]; then
-    echo "📝 변경사항 발견! 업데이트 중..."
-    git add .
-    git commit -m "🔄 자동 업데이트: $(date +'%Y-%m-%d %H:%M')"
-    git push origin main
-    echo "✅ GitHub 동기화 완료!"
-else
-    echo "📭 변경사항이 없습니다."
-fi
+while true; do
+    # 파일 변경 감지 (5초마다 체크)
+    if [ index.html -nt /tmp/last_sync 2>/dev/null ] || [ ! -f /tmp/last_sync ]; then
+        echo "🔔 파일 변경 감지! $(date)"
+        
+        # 동기화 실행
+        ./sync_both.sh
+        
+        # 마지막 동기화 시간 기록
+        touch /tmp/last_sync
+        
+        echo "✅ 동기화 완료!"
+        echo "━━━━━━━━━━━━━━━━━━━━"
+    fi
+    
+    sleep 5
+done
